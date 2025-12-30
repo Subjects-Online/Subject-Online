@@ -1,0 +1,103 @@
+/* Start Global rules */
+:root{
+ --main-color: #2196f3;
+  --main-color-alt: #1787e0;
+  --main-transition:.3s;
+  --main-padding-top:px;
+  --main-padding-bottom:px;
+  --main-margin-top:px;
+  --main-margin-bottom:px;
+  --section-background:#e2d8d8;
+  --landing-background:rgb(186, 215, 216);
+  --main-line-higth:1.5;
+}
+
+body{
+background-color: var(--section-background);
+}
+
+.container {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* End Global rules */
+
+/* Start Home */
+/* Start landing */
+.landing{
+  position: relative;
+  height: 600px;
+  }
+
+.landing .container{
+   min-height: calc(100vh - 16px);
+  display: flex;
+  align-items: center;
+}
+
+.landing::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  z-index: -1;
+}
+
+
+
+
+/* End landing */
+
+/* End Home */
+
+/* Start Pages */
+/* Start Accounting Section in */
+
+/* Start Accounting Section in */
+
+/* Start Eco Section in */
+
+/* Start Eco Section in */
+
+/* Start Puplic Section in */
+
+/* Start Puplic Section in */
+
+/* Start Stat Section in */
+
+/* Start Stat Section in */
+
+/* Start English Section in */
+
+/* Start English Section in */
+
+/* Start Mis Section in */
+
+/* Start Mis Section in */
+
+/* Start Production Section in */
+
+/* Start Production Section in */
+
+/* Start English Section in */
+
+/* Start English Section in */
+/* End Pages */
+
+
+/* Start Media */
+
+/* End Media */
+
+/* start animation */
+
+/* end animation */
+
+
