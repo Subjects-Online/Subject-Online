@@ -6,23 +6,17 @@
     <title>Accounting - Subject Online</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../Css/main.css">
-      <style>
-        /* Subject-specific overrides */
+    <link rel="stylesheet" href="../Css/subject-theme.css">
+    <style>
+        /* Subject-specific accent color overrides */
+        :root {
+            --accent: #8b5cf6;
+            --accent-hover: #7c3aed;
+        }
+        
+        /* Subject-specific background pattern */
         .subject-header {
-            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
-        }
-        .lesson-item a:hover {
-            color: #8b5cf6;
-        }
-        .lesson-item .lesson-number {
-            background: #f3e8ff;
-            color: #8b5cf6;
-        }
-        .back-button {
-            color: #8b5cf6;
-        }
-        .back-button:hover {
-            color: #7c3aed;
+            background: linear-gradient(135deg, #6d28d9, #8b5cf6);
         }
     </style>
 </head>
@@ -38,7 +32,11 @@
         </nav>
         
         <a href="../index.html#subjects" class="back-button">
-             Back to Subjects
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Back to Subjects
         </a>
         
         <div class="subject-header">
@@ -80,32 +78,32 @@
                 </div>
             </div>
 
-            <!-- Summaries & Key Terms -->
+            <!-- Summaries & Key Words -->
             <div class="chapter-card">
-                <h2><span>2</span> Summaries & Key Terms</h2>
+                <h2><span>2</span> Summaries & Key Words</h2>
                 <div class="lessons">
                     <div class="lesson-item">
                         <a href="#">
                             <span class="lesson-number">1</span>
-                            <span>Chapter 1 Summary & Key Terms</span>
+                            <span>Chapter 1 Summary & Key Words</span>
                         </a>
                     </div>
                     <div class="lesson-item">
                         <a href="#">
                             <span class="lesson-number">2</span>
-                            <span>Chapter 2 Summary & Key Terms</span>
+                            <span>Chapter 2 Summary & Key Words</span>
                         </a>
                     </div>
                     <div class="lesson-item">
                         <a href="#">
                             <span class="lesson-number">3</span>
-                            <span>Chapter 3 Summary & Key Terms</span>
+                            <span>Chapter 3 Summary & Key Words</span>
                         </a>
                     </div>
                     <div class="lesson-item">
                         <a href="#">
                             <span class="lesson-number">4</span>
-                            <span>Chapter 4 Summary & Key Terms</span>
+                            <span>Chapter 4 Summary & Key Words</span>
                         </a>
                     </div>
                 </div>

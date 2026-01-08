@@ -201,10 +201,6 @@ body {
     z-index: 2;
 }
 
-.chapter-card:hover h2 span {
-    display: inline-block;
-    animation: float 3s ease-in-out infinite;
-}
 
 .chapter-card h2 {
     color: #1f2937;
@@ -345,21 +341,7 @@ body {
     transition: all 0.3s ease;
 }
 
-.breadcrumb::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
 
-.breadcrumb:hover::before {
-    width: 6px;
-    border-radius: 0 4px 4px 0;
-}
 
 .breadcrumb a {
     color: #3b82f6;
