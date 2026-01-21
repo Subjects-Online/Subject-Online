@@ -145,7 +145,7 @@ body {
 }
 
 .subject-header h1 {
-  font-size: 2.5rem;
+  font-size: 35px;
   margin-bottom: 15px;
   position: relative;
   z-index: 2;
@@ -529,7 +529,7 @@ body {
   }
 
   .subject-header h1 {
-    font-size: 2rem;
+    font-size: 25px;
   }
 
   .breadcrumb {
