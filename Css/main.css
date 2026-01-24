@@ -20,7 +20,7 @@ body {
   padding: 20px;
 }
 
-.back-button {
+/* .back-button {
   display: inline-flex;
   align-items: center;
   margin-bottom: 30px;
@@ -34,7 +34,7 @@ body {
   overflow: hidden;
   background: rgba(99, 102, 241, 0.1);
   border: 1px solid rgba(99, 102, 241, 0.2);
-}
+} */
 
 .back-button:hover {
   color: #4338ca;
@@ -595,7 +595,7 @@ background-color: #861f8b19;
   }
 
   .subject-header h1 {
-    font-size: 25px;
+    font-size: 10px;
   }
 
   .breadcrumb {

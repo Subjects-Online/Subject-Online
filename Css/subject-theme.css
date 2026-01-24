@@ -24,7 +24,7 @@ body {
 }
 
 /* Breadcrumb Navigation */
-.breadcrumb {
+/* .breadcrumb {
   padding: 15px 0;
   margin-bottom: 20px;
   color: var(--text-secondary);
@@ -43,7 +43,7 @@ body {
 .breadcrumb span {
   margin: 0 5px;
   color: var(--text-secondary);
-}
+} */
 
 /* Back Button */
 .back-button {
