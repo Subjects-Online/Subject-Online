@@ -42,6 +42,7 @@
 
   .hero .hero-content .icons {
     order: 3;
+    margin-top: -80px;
   }
 
   .hero-actions {
