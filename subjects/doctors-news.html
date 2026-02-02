@@ -93,7 +93,7 @@
 
         .subjects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
             gap: 40px;
             margin-top: 40px;
             position: relative;
@@ -293,7 +293,7 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             .essay-container {
-                padding: 40px 20px;
+                padding: 40px 6px;
                 margin-bottom: 40px;
             }
 
@@ -307,7 +307,7 @@
             }
 
             .subject-card {
-                padding: 30px 20px;
+                padding: 30px 10px;
             }
 
             .subject-title {
@@ -323,6 +323,14 @@
                 gap: 15px;
                 align-items: flex-start;
             }
+        }
+          @media (max-width: 425px) {
+.container {
+        padding: 10px;
+    }
+}
+        body{
+            /* padding: 0px; */
         }
     </style>
 
@@ -396,7 +404,7 @@
 
         .subjects-exams-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
             gap: 40px;
             margin-top: 40px;
             position: relative;

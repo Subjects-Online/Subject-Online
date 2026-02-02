@@ -109,6 +109,8 @@
 
   .card-number {
     font-size: 3rem;
+        left: 80%;
+        top: 42%;
   }
 
   .card-content h3 {
@@ -142,8 +144,9 @@
   }
 
   .favorite-btn {
-    width: 45px;
-    height: 45px;
+    /* width: 30%;
+    height: 45px; */
+    margin: 0 auto;
   }
 
   /* Footer */
@@ -200,6 +203,7 @@
   .breadcrumb {
     display: none;
   }
+ 
 }
 
 @media (max-width: 1024px) and (min-width: 769px) {
@@ -350,6 +354,7 @@ color: rgb(110, 255, 97);
     min-height: 36px;
     display: flex;
     align-items: center;
+    margin: 0 auto;
   }
 }
 
