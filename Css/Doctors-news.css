@@ -661,7 +661,7 @@ html {
   margin-bottom: 50px;
   justify-content: center;
   flex-wrap: wrap;
-  width: 100%;
+  /* width: 100%; */
   padding: 25px 30px;
   background: linear-gradient(
     135deg,
