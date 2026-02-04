@@ -75,3 +75,4 @@ function init() {
 
 // بدء التطبيق عند تحميل الصفحة
 document.addEventListener("DOMContentLoaded", init);
+ 
