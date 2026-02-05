@@ -319,7 +319,7 @@
 
   .hero .hero-content {
     padding: 30px 20px;
-    flex-direction: row;
+    flex-direction: column;
     gap: 40px;
   }
 

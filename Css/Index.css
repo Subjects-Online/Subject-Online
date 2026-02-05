@@ -122,7 +122,7 @@ body {
 }
 
 .nav .title {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 800;
   background: linear-gradient(135deg, #ffffff, #a5b4fc);
   -webkit-background-clip: text;
@@ -130,7 +130,6 @@ body {
   background-clip: text;
   margin: 0;
   letter-spacing: -1px;
-  text-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
 }
 
 .nav .New {
@@ -204,21 +203,22 @@ body {
   gap: 0%;
   position: relative;
   z-index: 2;
+  flex-direction: column;
+
 }
 
 .hero .hero-content .container .hero-badge {
-  font-size: clamp(3rem, 8vw, 6rem);
-  font-weight: 900;
-  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #c084fc 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0 0 80px rgba(99, 102, 241, 0.5);
-  margin-bottom: 30px;
-  letter-spacing: -2px;
-  line-height: 115px;
+    font-size: clamp(3rem, 5vw, 6rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: -70px;
+    margin-top: -70px;
+    letter-spacing: -2px;
+    line-height: 160px;
 }
-
 .hero .hero-content .icons {
   animation: slideInRight 1s ease-out;
   text-align: center;
@@ -245,7 +245,6 @@ body {
   margin: 0 15px;
   transition: all 0.3s ease;
   cursor: pointer;
-  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
 }
 
 .hero .hero-content .icons span:hover {
@@ -268,12 +267,12 @@ body {
   text-transform: uppercase;
   letter-spacing: 2px;
   border: 2px solid transparent;
-  animation: pulseBtn 2s ease-in-out infinite;
   width: fit-content;
   margin: 0 auto;
 }
 
 .btn-hero-secondary {
+  display: none;
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
   color: white;
   box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
