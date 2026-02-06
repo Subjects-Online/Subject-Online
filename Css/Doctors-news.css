@@ -355,7 +355,7 @@ body {
 
 .subjects-exams-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(725px, 1fr));
+  grid-template-columns: repeat(1,  1f);
   gap: 40px;
   margin-top: 40px;
   position: relative;
