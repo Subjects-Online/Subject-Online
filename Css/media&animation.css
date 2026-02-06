@@ -265,14 +265,16 @@
 @media (max-width: 425px) {
   /* Extra small mobile devices */
   .nav {
-    display: flex;
-    justify-content: space-between;
-    width: 99%;
-    padding: 5px 0px;
-    background: none;
-    border: none;
-    backdrop-filter: blur(0px);
-    box-shadow: none;
+    top: 10px;
+        display: flex;
+        justify-content: space-between;
+        width: 95%;
+        padding: 15px 0px;
+        border-radius: 10px;
+        /* background: none; */
+        border: none;
+        backdrop-filter: blur(10px);
+        box-shadow: none;
 
   }
  .nav > h2{
@@ -287,11 +289,11 @@
 
   .nav > div > a {
     font-size: 11px;
-    padding: 6px 12px;
+    padding: 10px;
   }
 
   .hero  {
-    padding: 30px 0px;
+    padding: 0px 0px;
   }
 
   .hero  .container .hero-badge {
@@ -389,7 +391,7 @@
 
 /* Improve touch targets for mobile */
 @media (max-width: 768px) {
-  .nav > div > a,
+  
   .btn-hero,
   .start-btn,
   .favorite-btn {
@@ -403,6 +405,7 @@
     align-items: center;
     margin: 0 auto;
   }
+  
 }
 
 /* Fix for iOS Safari */
