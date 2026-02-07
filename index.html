@@ -46,7 +46,7 @@
         
             <!-- <div class="container"> -->
                 <div class="main">
-                     <div class="hero-badge">Subjects Online</div>
+                <div class="hero-badge">Subjects Online</div>
                 <br>
                 <div class="icons">
                     <div class="learn">College In One Link</div>
@@ -58,10 +58,10 @@
                     <span>🏭</span>
                     <span>💻</span>
                 </div>
-                 
+                
                     </div>
             </div>
-               
+            
         
     </section>
     <section class="subjects" id="subjects">
@@ -183,9 +183,6 @@
             </div>
 
             <!-- Statistics -->
-
-
-
             <div class="subject-card-new" data-color="violet">
                 <div class="card-glow"></div>
                 <div class="card-pattern"></div>
@@ -212,7 +209,6 @@
             </div>
 
             <!-- Marketing -->
-
             <div class="subject-card-new" data-color="pink">
                 <div class="card-glow"></div>
                 <div class="card-pattern"></div>
@@ -239,7 +235,6 @@
             </div>
 
             <!-- AIS -->
-            
             <div class="subject-card-new" data-color="indigo">
                 <div class="card-glow"></div>
                 <div class="card-pattern"></div>
@@ -302,15 +297,14 @@
     <script src="vendor/typed.js/typed.umd.min.js"></script>
     <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
     <script>
-
         // Sample subjects data (same as favorites.html)
         const subjects = [
-            { id: 1, name: 'Intermediate Accounting 2', icon: '📊', description: 'Master financial reporting and auditing', url: 'subjects/accounting.html' },
-            { id: 2, name: 'Macro Economics', icon: '📈', description: 'Analyze global economic systems', url: 'subjects/economics.html' },
-            { id: 3, name: 'Public Finance', icon: '🏛️', description: 'Master fiscal policy and budget analysis', url: 'subjects/public-Finance.html' },
-            { id: 4, name: 'English', icon: '🌐', description: 'Develop professional communication skills', url: 'subjects/english.html' },
-            { id: 5, name: 'Statistics', icon: '📊', description: 'Master data science fundamentals', url: 'subjects/statistics.html' },
-            { id: 6, name: 'Marketing', icon: '🏭', description: 'Master brand strategy and digital advertising', url: 'subjects/marketing.html' },
+            { id: 1, name: 'Intermediate Accounting 2', icon: '📊', description: '', url: 'subjects/accounting.html' },
+            { id: 2, name: 'Macro Economics', icon: '📈', description: '', url: 'subjects/economics.html' },
+            { id: 3, name: 'Public Finance', icon: '🏛️', description: '', url: 'subjects/public-Finance.html' },
+            { id: 4, name: 'English', icon: '🌐', description: '', url: 'subjects/english.html' },
+            { id: 5, name: 'Statistics', icon: '📊', description: '', url: 'subjects/statistics.html' },
+            { id: 6, name: 'Marketing', icon: '🏭', description: '', url: 'subjects/marketing.html' },
             { id: 7, name: 'Management Information Systems', icon: '💻', description: 'Master database design and IT strategy', url: 'subjects/Ais.html' } ,
             { id: 8, name: 'Political Science', icon: '', description: '', url: 'subjects/Political.html.html' } ,
         ];
@@ -482,357 +476,98 @@
                 updateFavoriteButtons();
             }
         }
-
-
-
-
-
-
-
-        // Check if subject is in favorites
-
-
-
+        // Check if subject is in favorite
         function isFavorite(subjectId) {
-
-
-
             const favorites = loadFavorites();
-
-
-
             return favorites.includes(subjectId);
-
-
-
         }
-
-
-
         // Toggle favorite (add/remove)
-
-
-
         function toggleFavorite(subjectId) {
-
-
-
             if (isFavorite(subjectId)) {
-
-
-
                 removeFromFavorites(subjectId);
-
-
-
             } else {
-
-
-
                 addToFavorites(subjectId);
-
-
-
             }
-
-
-
             updateFavoriteButtons();
-
-
-
         }
-
-
-
         // Update favorite buttons on the page
-
-
-
         function updateFavoriteButtons() {
-
-
-
             const cards = document.querySelectorAll('.subject-card-new');
-
-
-
             cards.forEach((card, index) => {
-
-
-
                 const subjectId = index + 1;
-
-
-
                 const heartIcon = card.querySelector('.favorite-btn i');
-
-
-
-
-
-
-
                 if (isFavorite(subjectId)) {
-
-
-
                     heartIcon.classList.remove('far');
-
-
-
                     heartIcon.classList.add('fas');
-
-
-
                     heartIcon.style.color = '#ef4444';
-
-
-
                 } else {
-
-
-
                     heartIcon.classList.remove('fas');
-
-
-
                     heartIcon.classList.add('far');
-
-
-
                     heartIcon.style.color = '';
-
-
-
                 }
-
-
-
             });
-
-
-
         }
-
-
-
-
-
-
-
         // Show notification
-
-
-
         function showNotification(message) {
-
-
-
             const notification = document.createElement('div');
-
-
-
             notification.style.cssText = `
-
-
-
             position: fixed;
-
-
-
             top: 100px;
-
-
-
             right: 20px;
-
-
-
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
-
-
-
             color: white;
-
-
-
             padding: 15px 25px;
-
-
-
             border-radius: 15px;
-
-
-
             box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
-
-
-
             z-index: 10000;
-
-
-
             animation: slideInRight 0.5s ease-out;
-
-
-
             font-weight: 600;
-
-
-
         `;
-
-
-
             notification.textContent = message;
-
-
-
             document.body.appendChild(notification);
-
-
-
-
-
-
-
             setTimeout(() => {
-
-
-
                 notification.style.animation = 'slideOutRight 0.5s ease-out';
-
-
-
                 setTimeout(() => notification.remove(), 500);
-
-
-
             }, 3000);
-
-
-
         }
-
-
-
-
-
-
-
         // Check if user is blocked
-
-
-
         function isUserBlocked() {
-
-
-
             const userId = getUserId();
-
-
-
             const blockedUsers = JSON.parse(localStorage.getItem('blocked_users') || '[]');
-
-
-
             return blockedUsers.includes(userId);
-
-
-
         }
-
-
-
-
-
-
-
         // Add click handlers to favorite buttons
-
-
-
         document.addEventListener('DOMContentLoaded', function () {
-
-
-
             // Check if user is blocked
-
-
-
             if (isUserBlocked()) {
-
                 showNotification('Your account has been blocked! 🚫 Please contact support.', '#ef4444');
-
-
-
                 // Disable all interactive elements
-
                 document.querySelectorAll('.start-btn, .favorite-btn').forEach(btn => {
-
                     btn.style.pointerEvents = 'none';
-
                     btn.style.opacity = '0.5';
-
                 });
-
                 return;
-
             }
-
-
-
             // Initialize favorite buttons
-
             updateFavoriteButtons();
-
-
-
             // Add click handlers to favorite buttons
-
             document.querySelectorAll('.favorite-btn').forEach((btn) => {
-
                 // Remove inline onclick handlers to prevent double execution
-
                 btn.removeAttribute('onclick');
-
-
-
                 // Get subjectId from data attribute or use the button's position
-
                 const card = btn.closest('.subject-card-new');
-
                 const allCards = Array.from(document.querySelectorAll('.subject-card-new'));
-
                 const subjectId = allCards.indexOf(card) + 1;
-
-
-
                 btn.addEventListener('click', function (e) {
-
                     e.preventDefault();
-
                     e.stopPropagation();
-
-
-
                     if (isUserBlocked()) {
-
                         showNotification('Your account is blocked! 🚫', '#ef4444');
-
                         return;
-
                     }
-
-
-
                     toggleFavorite(subjectId);
-
                 });
-
             });
-
         });
 
 
@@ -1154,7 +889,6 @@
 
     </footer>
 
-    <!-- Scripts -->
 </body>
 
 </html>

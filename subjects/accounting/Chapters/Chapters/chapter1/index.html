@@ -6,11 +6,9 @@
     <title>Chapter 1: Introduction to Economics - Subject Online</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
     <link rel="stylesheet" href="../../Css/main.css" />
     <link rel="stylesheet" href="../../Css/subject-theme.css" />
-    <script src="../../Js/theme-toggle.js"></script>
     <!-- PDF Viewer Modal -->
     <div id="pdfModal" class="modal">
       <div class="modal-content">
@@ -152,16 +150,20 @@
       .breadcrumb {
         position: sticky;
         top: 10px;
-       background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05));
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(139, 92, 246, 0.2);
-    border-radius: 12px;
-    padding: 12px 20px;
-    margin-bottom: 20px;
-    width: 40%;
-    margin: 30px auto;
-    display: flex;
-    justify-content: space-evenly;
+        background: linear-gradient(
+          135deg,
+          rgba(139, 92, 246, 0.1),
+          rgba(139, 92, 246, 0.05)
+        );
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        border-radius: 12px;
+        padding: 12px 20px;
+        margin-bottom: 20px;
+        width: 45%;
+        margin: 30px auto;
+        display: flex;
+        justify-content: space-evenly;
       }
 
       .breadcrumb a {
@@ -230,7 +232,7 @@
 
       .pdf-grid {
         display: grid;
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 25px;
         margin-top: 30px;
         padding: 0 15px;
@@ -545,12 +547,14 @@
         .subject-header h1 {
           font-size: 1.5rem;
         }
+        .breadcrumb {
+          display: none;
+        }
       }
     </style>
     <script
       async
-      src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"
-    ></script>
+      src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -582,8 +586,7 @@
           stroke="currentColor"
           stroke-width="2"
           stroke-linecap="round"
-          stroke-linejoin="round"
-        >
+          stroke-linejoin="round">
           <line x1="19" y1="12" x2="5" y2="12"></line>
           <polyline points="12 19 5 12 12 5"></polyline>
         </svg>
@@ -723,8 +726,7 @@
           pdfGrid.innerHTML = ""; // Clear loading message
 
           if (pdfFiles.length === 0) {
-            pdfGrid.innerHTML =
-              '<div class="loading">Coming Soon...</div>';
+            pdfGrid.innerHTML = '<div class="loading">Coming Soon...</div>';
             return;
           }
 
