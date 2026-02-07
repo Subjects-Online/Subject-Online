@@ -108,6 +108,9 @@
     border-radius: 20px;
     inset: -5px;
   }
+  .icon-ring:hover {
+    inset: -5px;
+  }
   .card-number {
     font-size: 7rem;
     left: 41%;

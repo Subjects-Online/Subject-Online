@@ -462,7 +462,7 @@ body {
 
 .subject-card-new:hover .icon-ring {
   opacity: 1;
-  inset: -35px;
+  inset: -15px;
   border-color: rgba(99, 102, 241, 0.8);
   box-shadow: 0 0 40px rgba(99, 102, 241, 0.5);
 }
