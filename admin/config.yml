@@ -1,5 +1,5 @@
 backend:
-  name: github
+  name: git-gateway
   repo: ahmedtamer-20cm/Subjects-Online
   branch: main
 
