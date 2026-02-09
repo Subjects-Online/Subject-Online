@@ -17,13 +17,15 @@ collections:
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Description", name: "description", widget: "text" }
 
-  - name: "subjects"
+ - name: "subjects"
     label: "المواد الدراسية"
-    folder: "../subjects"
+    folder: "subjects"
     extension: "html"
     format: "frontmatter"
-    identifier_field: "title"
     create: true
+    identifier_field: "title"
+    # هذا السطر يخبر اللوحة بالبحث في كل المجلدات الفرعية عن أي ملف index.html
+    path: "{{route}}/index" 
     nested:
       depth: 10
     fields:
