@@ -1,4 +1,4 @@
-title: "accounting"
+
 <!doctype html>
 <html lang="en" dir="ltr">
   <head>
@@ -12,15 +12,17 @@ title: "accounting"
       rel="stylesheet" />
     <link rel="stylesheet" href="../../Css/main.css" />
     <link rel="stylesheet" href="../../Css/subject-theme.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <!-- PDF Viewer Modal -->
     <div id="pdfModal" class="modal">
       <div class="modal-content">
         <span class="close-btn">&times;</span>
         <div class="modal-header">
           <h3 id="modalTitle"></h3>
-          <button id="downloadPdf" class="download-btn">
-            <i class="fas fa-download"></i> Download PDF
-          </button>
+          <a style="text-decoration: none;" id="downloadPdf" class="download-btn" download="Acquisition__Disposition_of_Property_Plant_and_Equipment.pdf" href="../../../../../Assets/Accounting/Acquisition__Disposition_of_Property_Plant_and_Equipment.pdf">
+          <i class="fas fa-download"></i> Download PDF
+        </a>
         </div>
         <div class="pdf-container">
           <iframe id="pdfViewer" frameborder="0"></iframe>
@@ -609,13 +611,13 @@ title: "accounting"
     <script>
       // List of PDF files in the assets folder with metadata
       const pdfFiles = [
-        // {
-        //   path: "../../../../../Assets/Accounting/lect 1.pdf",
-        //   title: "Lect 1 Dr.MZ  chapter 1",
-        //   size: "1.2 MB",
-        //   date: "2025-01-15",
-        //   icon: "<i class='fas fa-book-open'></i>",
-        // },
+        {
+          path: "../../../../../Assets/Accounting/Acquisition__Disposition_of_Property_Plant_and_Equipment.pdf",
+          title: "Lect 1-2 Dr.MZ chapter 1",
+          size: "3.3 MB",
+          date: "2026-02-16",
+          icon: "<i class='fas fa-book-open'></i>",
+        },
         // {
         //   path: "../../../../../Assets/Accounting/lect 1.pdf",
         //   title: "Lect 2 Dr.MZ chapter 1",
