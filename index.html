@@ -1,646 +1,876 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Subjects Online | Premium Learning Platform</title>
-  <meta name="description" content="Your all-in-one academic resource hub — course content, quizzes, summaries, Q&A, and exam reviews for every subject." />
-  <link rel="stylesheet" href="styles/main.css" />
-  <link rel="stylesheet" href="styles/index.css" />
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#4f8ef7" />
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="31d71665-7827-44ae-934b-7f68bc397123"></script>
-  <style>
-    /* ── Hero ──────────────────────────────────────── */
-    .hero {
-      padding: 5rem 2rem 3rem;
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.4rem 1.2rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(79,142,247,0.3);
-      background: rgba(79,142,247,0.08);
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--accent-blue);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-    .hero h1 {
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(2.2rem, 7vw, 4.5rem);
-      font-weight: 900;
-      line-height: 1.1;
-      letter-spacing: -2px;
-      margin-bottom: 1.25rem;
-    }
-    .hero h1 .gradient {
-      background: linear-gradient(135deg, var(--accent-blue) 20%, var(--accent-purple) 60%, var(--accent-pink) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero p {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      max-width: 540px;
-      margin: 0 auto 2.5rem;
-      line-height: 1.7;
-    }
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.75rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--glass-border);
-      background: var(--glass);
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: var(--transition);
-      backdrop-filter: blur(12px);
-    }
-    .btn-outline:hover { border-color: var(--glass-border-hover); color: var(--text-primary); background: var(--bg-card-hover); }
-
-    /* ── Install Button Navbar ─────────────────────── */
-    .nav-install-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.5rem 1rem;
-      border-radius: var(--radius-pill);
-      background: linear-gradient(135deg, rgba(79, 142, 247, 0.15), rgba(139, 92, 246, 0.15));
-      border: 1px solid rgba(79, 142, 247, 0.3);
-      color: var(--text-primary);
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-    }
-    .nav-install-btn::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: all 0.5s ease;
-    }
-    .nav-install-btn:hover {
-      background: linear-gradient(135deg, rgba(79, 142, 247, 0.25), rgba(139, 92, 246, 0.25));
-      border-color: rgba(79, 142, 247, 0.6);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(79, 142, 247, 0.2);
-    }
-    .nav-install-btn:hover::before {
-      left: 100%;
-    }
-    .nav-install-btn.downloading {
-      pointer-events: none;
-      animation: pulse-download 1s infinite alternate;
-    }
-    .nav-install-btn.downloading .install-icon {
-      animation: bounce-down 0.8s infinite;
-    }
-    @keyframes pulse-download {
-      0% { box-shadow: 0 0 0 0 rgba(79, 142, 247, 0.4); }
-      100% { box-shadow: 0 0 0 10px rgba(79, 142, 247, 0); }
-    }
-    @keyframes bounce-down {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(3px); }
-    }
-    @media (max-width: 640px) {
-      .nav-install-btn {
-        padding: 0.4rem 0.6rem;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subjects Online | Premium Learning Platform</title>
+    <meta
+      name="description"
+      content="Your all-in-one academic resource hub — course content, quizzes, summaries, Q&A, and exam reviews for every subject." />
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/index.css" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#4f8ef7" />
+    <script
+      defer
+      src="https://cloud.umami.is/script.js"
+      data-website-id="31d71665-7827-44ae-934b-7f68bc397123"></script>
+    <style>
+      /* ── Hero ──────────────────────────────────────── */
+      .hero {
+        padding: 5rem 2rem 3rem;
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.4rem 1.2rem;
+        border-radius: var(--radius-pill);
+        border: 1px solid rgba(79, 142, 247, 0.3);
+        background: rgba(79, 142, 247, 0.08);
         font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--accent-blue);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
       }
-      .hide-on-mobile {
-        display: none; /* Hide text on very small screens, keep icon */
+      .hero h1 {
+        font-family: "Outfit", sans-serif;
+        font-size: clamp(2.2rem, 7vw, 4.5rem);
+        font-weight: 900;
+        line-height: 1.1;
+        letter-spacing: -2px;
+        margin-bottom: 1.25rem;
       }
-    }
+      .hero h1 .gradient {
+        background: linear-gradient(
+          135deg,
+          var(--accent-blue) 20%,
+          var(--accent-purple) 60%,
+          var(--accent-pink) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .hero p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        max-width: 540px;
+        margin: 0 auto 2.5rem;
+        line-height: 1.7;
+      }
+      .hero-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .btn-outline {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.75rem;
+        border-radius: var(--radius-pill);
+        border: 1px solid var(--glass-border);
+        background: var(--glass);
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: var(--transition);
+        backdrop-filter: blur(12px);
+      }
+      .btn-outline:hover {
+        border-color: var(--glass-border-hover);
+        color: var(--text-primary);
+        background: var(--bg-card-hover);
+      }
 
-    /* ── Stats Row ─────────────────────────────────── */
-    .stats-row {
-      display: flex;
-      justify-content: center;
-      gap: 2.5rem;
-      flex-wrap: wrap;
-      padding: 1.5rem 2rem;
-      margin-bottom: 1rem;
-    }
-    .stat-item { text-align: center; }
-    .stat-item .val {
-      font-family: 'Outfit', sans-serif;
-      font-size: 2rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .stat-item .label { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+      /* ── Install Button Navbar ─────────────────────── */
+      .nav-install-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius-pill);
+        background: linear-gradient(
+          135deg,
+          rgba(79, 142, 247, 0.15),
+          rgba(139, 92, 246, 0.15)
+        );
+        border: 1px solid rgba(79, 142, 247, 0.3);
+        color: var(--text-primary);
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+      .nav-install-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: all 0.5s ease;
+      }
+      .nav-install-btn:hover {
+        background: linear-gradient(
+          135deg,
+          rgba(79, 142, 247, 0.25),
+          rgba(139, 92, 246, 0.25)
+        );
+        border-color: rgba(79, 142, 247, 0.6);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(79, 142, 247, 0.2);
+      }
+      .nav-install-btn:hover::before {
+        left: 100%;
+      }
+      .nav-install-btn.downloading {
+        pointer-events: none;
+        animation: pulse-download 1s infinite alternate;
+      }
+      .nav-install-btn.downloading .install-icon {
+        animation: bounce-down 0.8s infinite;
+      }
+      @keyframes pulse-download {
+        0% {
+          box-shadow: 0 0 0 0 rgba(79, 142, 247, 0.4);
+        }
+        100% {
+          box-shadow: 0 0 0 10px rgba(79, 142, 247, 0);
+        }
+      }
+      @keyframes bounce-down {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(3px);
+        }
+      }
+      @media (max-width: 640px) {
+        .nav-install-btn {
+          padding: 0.4rem 0.6rem;
+          font-size: 0.8rem;
+        }
+        .hide-on-mobile {
+          display: none; /* Hide text on very small screens, keep icon */
+        }
+      }
 
-    /* ── Subjects Grid ─────────────────────────────── */
-    .subjects-section { padding: 1rem 2rem 4rem; max-width: 1200px; margin: 0 auto; }
-    .subjects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.25rem;
-    }
-    .subject-card {
-      background: var(--bg-card);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-xl);
-      padding: 1.75rem;
-      cursor: pointer;
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-      text-decoration: none;
-      display: block;
-      backdrop-filter: blur(50px);
-    }
-    .subject-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--card-color), transparent);
-      opacity: 0;
-      transition: var(--transition);
-    }
-    .subject-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at top left, var(--card-alpha), transparent 60%);
-      opacity: 0;
-      transition: var(--transition);
-      pointer-events: none;
-    }
-    .subject-card:hover {
-      border-color: var(--card-border-hover);
-      transform: translateY(-5px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px var(--card-shadow);
-    }
-    .subject-card:hover::before { opacity: 1; }
-    .subject-card:hover::after { opacity: 1; }
-    .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
-    .card-icon-wrap {
-      width: 56px; height: 56px;
-      border-radius: var(--radius-md);
-      background: var(--card-icon-bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.75rem;
-      position: relative;
-      z-index: 1;
-    }
-    .card-arrow {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      border: 1px solid var(--glass-border);
-      background: var(--glass);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      transition: var(--transition);
-    }
-    .subject-card:hover .card-arrow {
-      background: var(--card-icon-bg);
-      color: var(--card-color);
-      border-color: var(--card-border-hover);
-    }
-    .card-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      margin-bottom: 0.35rem;
-      position: relative;
-      z-index: 1;
-    }
-    .card-desc {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-      margin-bottom: 1.25rem;
-      position: relative;
-      z-index: 1;
-    }
-    .card-sections {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      position: relative;
-      z-index: 1;
-    }
-    .card-section-badge {
-      font-size: 0.7rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: var(--radius-pill);
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-    .fav-star {
-      position: absolute;
-      top: 1.25rem;
-      right: 1.25rem;
-      font-size: 1rem;
-      color: var(--card-color);
-      opacity: 0;
-      transition: var(--transition);
-    }
-    .subject-card.is-fav .fav-star { opacity: 1; z-index: 2; }
+      /* ── Stats Row ─────────────────────────────────── */
+      .stats-row {
+        display: flex;
+        justify-content: center;
+        gap: 2.5rem;
+        flex-wrap: wrap;
+        padding: 1.5rem 2rem;
+        margin-bottom: 1rem;
+      }
+      .stat-item {
+        text-align: center;
+      }
+      .stat-item .val {
+        font-family: "Outfit", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        background: linear-gradient(
+          135deg,
+          var(--accent-blue),
+          var(--accent-purple)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .stat-item .label {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
 
-    /* ── Quick Links row ───────────────────────────── */
-    .quick-links {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      padding: 0 2rem 3rem;
-    }
-    .quick-link {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.7rem 1.4rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--glass-border);
-      background: var(--glass);
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      transition: var(--transition);
-      backdrop-filter: blur(12px);
-    }
-    .quick-link:hover { border-color: var(--glass-border-hover); color: var(--text-primary); background: var(--bg-card-hover); transform: translateY(-2px); }
+      /* ── Subjects Grid ─────────────────────────────── */
+      .subjects-section {
+        padding: 1rem 2rem 4rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .subjects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.25rem;
+      }
+      .subject-card {
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-xl);
+        padding: 1.75rem;
+        cursor: pointer;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+        display: block;
+        backdrop-filter: blur(50px);
+      }
+      .subject-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--card-color), transparent);
+        opacity: 0;
+        transition: var(--transition);
+      }
+      .subject-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse at top left,
+          var(--card-alpha),
+          transparent 60%
+        );
+        opacity: 0;
+        transition: var(--transition);
+        pointer-events: none;
+      }
+      .subject-card:hover {
+        border-color: var(--card-border-hover);
+        transform: translateY(-5px);
+        box-shadow:
+          0 20px 60px rgba(0, 0, 0, 0.5),
+          0 0 30px var(--card-shadow);
+      }
+      .subject-card:hover::before {
+        opacity: 1;
+      }
+      .subject-card:hover::after {
+        opacity: 1;
+      }
+      .card-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.25rem;
+      }
+      .card-icon-wrap {
+        width: 70px;
+        height: 70px;
+        border-radius: var(--radius-md);
+        background: var(--card-icon-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.3rem;
+        position: relative;
+        z-index: 1;
+        margin: 0 auto;
+        filter: drop-shadow(0 0 15px black);
+      }
+      .card-arrow {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1px solid var(--glass-border);
+        background: var(--glass);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        color: #ddd;
+        transition: var(--transition);
+      }
+      .subject-card:hover .card-arrow {
+        background: var(--card-icon-bg);
+        color: var(--card-color);
+        border-color: var(--card-border-hover);
+      }
+      .card-title {
+        font-family: "Outfit", sans-serif;
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: 0.35rem;
+        position: relative;
+        z-index: 1;
+      }
+      .card-desc {
+        font-size: 0.85rem;
+        color: #ddd;
+        line-height: 1.5;
+        margin-bottom: 1.25rem;
+        position: relative;
+        z-index: 1;
+      }
+      .card-sections {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        position: relative;
+        z-index: 1;
+      }
+      .card-section-badge {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: var(--radius-pill);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #ddd;
+        font-weight: 500;
+      }
+      .fav-star {
+        position: absolute;
+        top: 1.25rem;
+        right: 1.25rem;
+        font-size: 1rem;
+        color: var(--card-color);
+        opacity: 0;
+        transition: var(--transition);
+      }
+      .subject-card.is-fav .fav-star {
+        opacity: 1;
+        z-index: 2;
+      }
 
-    /* ── Responsive ────────────────────────────────── */
-    @media (max-width: 640px) {
-      .hero { padding: 3.5rem 1.25rem 2rem; }
-      .subjects-section { padding: 1rem 1rem 3rem; }
-      .subjects-grid { grid-template-columns: 1fr; }
-      .stats-row { gap: 1.5rem; }
-    }
-  </style>
-</head>
-<body>
-  <!-- Starfield -->
-  <canvas id="starfield-canvas"></canvas>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
+      /* ── Quick Links row ───────────────────────────── */
+      .quick-links {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        padding: 0 2rem 3rem;
+      }
+      .quick-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.7rem 1.4rem;
+        border-radius: var(--radius-pill);
+        border: 1px solid var(--glass-border);
+        background: var(--glass);
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        transition: var(--transition);
+        backdrop-filter: blur(12px);
+      }
+      .quick-link:hover {
+        border-color: var(--glass-border-hover);
+        color: var(--text-primary);
+        background: var(--bg-card-hover);
+        transform: translateY(-2px);
+      }
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <a href="index.html" style="margin-right: auto;" class="nav-logo"><span>📚</span> Subjects Online</a>
-    <div class="nav-links">
-      <a href="index.html" class="active"><span class="icon">🏠</span> Home</a>
-      <a href="doctors-news.html"><span class="icon"></span> Doctors News</a>
-      <a href="Favorites.html" class="nav-favorites-btn"><span class="icon">⭐</span> Favorites</a>
-    </div>
-    <button id="nav-install-btn" class="nav-install-btn" style="margin-left: auto; margin-right: 1rem;">
-      <span class="install-icon">📲</span> <span class="hide-on-mobile">Install App</span>
-    </button>
-    <div class="hamburger" id="hamburger" aria-label="Open menu">
-      <span></span><span></span><span></span>
-    </div>
-  </nav>
+      /* ── Responsive ────────────────────────────────── */
+      @media (max-width: 640px) {
+        .hero {
+          padding: 3.5rem 1.25rem 2rem;
+        }
+        .subjects-section {
+          padding: 1rem 1rem 3rem;
+        }
+        .subjects-grid {
+          grid-template-columns: 1fr;
+        }
+        .stats-row {
+          gap: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Starfield -->
+    <canvas id="starfield-canvas"></canvas>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
 
-  <!-- Mobile nav -->
-  <div class="mobile-nav" id="mobile-nav">
-    <a href="index.html">🏠 Home</a>
-    <a href="doctors-news.html"> Doctors News</a>
-    <a href="Favorites.html">⭐ Favorites</a>
-    <a href="#" id="mobile-install-btn" class="nav-install-btn" style="margin-top: 1rem; justify-content: center;">
-      <span class="install-icon">📲</span> <span>Install App</span>
-    </a>
-  </div>
-
-  <!-- Page -->
-  <main class="page-wrapper">
-    <!-- Hero -->
-    <div class="hero">
-      <div class="hero-eyebrow">🎓 Academic Platform</div>
-      <h1>Subjects <span class="gradient">Online</span><br/></h1>
-      <p>Everything you need — course content, quizzes, section solutions, summaries, Q&A and final reviews — all in one beautifully designed platform.</p>
-      <div class="hero-actions">
-        <a href="#subjects" class="btn-primary">📘 Browse Subjects</a>
-        <a href="doctors-news.html" class="btn-outline"> Doctors News</a>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <a href="index.html" style="margin-right: auto" class="nav-logo"
+        ><span>📚</span> Subjects Online</a
+      >
+      <div class="nav-links">
+        <a href="index.html" class="active"
+          ><span class="icon">🏠</span> Home</a
+        >
+        <a href="doctors-news.html"><span class="icon"></span> Doctors News</a>
+        <a href="Favorites.html" class="nav-favorites-btn"
+          ><span class="icon">⭐</span> Favorites</a
+        >
       </div>
-    </div>
-
-    <!-- Stats -->
-    <div class="stats-row">
-      <div class="stat-item"><div class="val">8</div><div class="label">Subjects</div></div>
-      <div class="stat-item"><div class="val">7</div><div class="label">Sections Each</div></div>
-      <div class="stat-item"><div class="val">∞</div><div class="label">Resources</div></div>
-      <div class="stat-item"><div class="val">100%</div><div class="label">Free Access</div></div>
-    </div>
-
-    <!-- Search -->
-    <div class="subjects-section" id="subjects">
-      <div class="search-wrapper" style="margin-bottom:2rem;">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="search-input" placeholder="Search subjects…" autocomplete="off" />
+      <button
+        id="nav-install-btn"
+        class="nav-install-btn"
+        style="margin-left: auto; margin-right: 1rem">
+        <span class="install-icon">📲</span>
+        <span class="hide-on-mobile">Install App</span>
+      </button>
+      <div class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
       </div>
+    </nav>
 
-      <!-- Subjects Grid -->
-      <div class="subjects-grid" id="subjects-grid"></div>
-
-      <!-- No results -->
-      <div id="no-results" style="display:none;" class="empty-state">
-        <span class="empty-icon">🔭</span>
-        <h3>No subjects found</h3>
-        <p>Try a different search term.</p>
-      </div>
+    <!-- Mobile nav -->
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="index.html">🏠 Home</a>
+      <a href="doctors-news.html"> Doctors News</a>
+      <a href="Favorites.html">⭐ Favorites</a>
+      <a
+        href="#"
+        id="mobile-install-btn"
+        class="nav-install-btn"
+        style="margin-top: 1rem; justify-content: center">
+        <span class="install-icon">📲</span> <span>Install App</span>
+      </a>
     </div>
 
-    <!-- Quick links -->
-    <div class="quick-links">
-      <a href="doctors-news.html" class="quick-link"> Doctors News</a>
-      <a href="Favorites.html" class="quick-link">⭐ My Favorites</a>
-      <a href="admin.html" class="quick-link">⚙️ Admin Panel</a>
-    </div>
-  </main>
-
-  <!-- Premium Footer (home page only) -->
-  <footer class="site-footer">
-    <div class="footer-main">
-
-      <!-- Brand -->
-      <div class="footer-col footer-brand">
-        <div class="footer-logo">📚 Subjects Online</div>
-        <p class="footer-desc">Your comprehensive platform for learning management, finance, economics, and more. Empowering students worldwide.</p>
-        <div class="footer-socials">
-          <a href="#" class="social-btn facebook" title="Facebook" aria-label="Facebook">f</a>
-          <a href="https://wa.me/" target="_blank" class="social-btn whatsapp" title="WhatsApp" aria-label="WhatsApp">&#10003;</a>
-          <a href="#" class="social-btn linkedin" title="LinkedIn" aria-label="LinkedIn">in</a>
+    <!-- Page -->
+    <main class="page-wrapper">
+      <!-- Hero -->
+      <div class="hero">
+        <div class="hero-eyebrow">🎓 Academic Platform</div>
+        <h1>Subjects <span class="gradient">Online</span><br /></h1>
+        <p>
+          Everything you need — course content, quizzes, section solutions,
+          summaries, Q&A and final reviews — all in one beautifully designed
+          platform.
+        </p>
+        <div class="hero-actions">
+          <a href="#subjects" class="btn-primary">📘 Browse Subjects</a>
+          <a href="doctors-news.html" class="btn-outline"> Doctors News</a>
         </div>
       </div>
 
-      <!-- Quick Links -->
-      <div class="footer-col">
-        <div class="footer-col-title">Quick Links</div>
-        <ul class="footer-links">
-          <li><a href="index.html#subjects">All Subjects</a></li>
-          <li><a href="Favorites.html">My Favorites</a></li>
-          <li><a href="doctors-news.html">Doctors News</a></li>
-        </ul>
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="val">8</div>
+          <div class="label">Subjects</div>
+        </div>
+        <div class="stat-item">
+          <div class="val">7</div>
+          <div class="label">Sections Each</div>
+        </div>
+        <div class="stat-item">
+          <div class="val">∞</div>
+          <div class="label">Resources</div>
+        </div>
+        <div class="stat-item">
+          <div class="val">100%</div>
+          <div class="label">Free Access</div>
+        </div>
       </div>
 
-      <!-- Contact -->
-      <div class="footer-col">
-        <div class="footer-col-title">Contact Info</div>
-        <ul class="footer-contact-list">
-          <li><span class="fc-icon">&#9993;</span> support@subjectsonline.com</li>
-          <li><span class="fc-icon">&#9742;</span> +20 123 456 7890</li>
-          <li><span class="fc-icon">&#9679;</span> Cairo, Egypt</li>
-        </ul>
-        <a href="https://t.me/" target="_blank" class="footer-contact-btn">&#9992; Contact Us</a>
+      <!-- Search -->
+      <div class="subjects-section" id="subjects">
+        <div class="search-wrapper" style="margin-bottom: 2rem">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search subjects…"
+            autocomplete="off" />
+        </div>
+
+        <!-- Subjects Grid -->
+        <div class="subjects-grid" id="subjects-grid"></div>
+
+        <!-- No results -->
+        <div id="no-results" style="display: none" class="empty-state">
+          <span class="empty-icon">🔭</span>
+          <h3>No subjects found</h3>
+          <p>Try a different search term.</p>
+        </div>
       </div>
 
+      <!-- Quick links -->
+      <div class="quick-links">
+        <a href="doctors-news.html" class="quick-link"> Doctors News</a>
+        <a href="Favorites.html" class="quick-link">⭐ My Favorites</a>
+        <a href="admin.html" class="quick-link">⚙️ Admin Panel</a>
+      </div>
+    </main>
+
+    <!-- Premium Footer (home page only) -->
+    <footer class="site-footer">
+      <div class="footer-main">
+        <!-- Brand -->
+        <div class="footer-col footer-brand">
+          <div class="footer-logo">📚 Subjects Online</div>
+          <p class="footer-desc">
+            Your comprehensive platform for learning management, finance,
+            economics, and more. Empowering students worldwide.
+          </p>
+          <div class="footer-socials">
+            <a
+              href="#"
+              class="social-btn facebook"
+              title="Facebook"
+              aria-label="Facebook"
+              >f</a
+            >
+            <a
+              href="https://wa.me/"
+              target="_blank"
+              class="social-btn whatsapp"
+              title="WhatsApp"
+              aria-label="WhatsApp"
+              >&#10003;</a
+            >
+            <a
+              href="#"
+              class="social-btn linkedin"
+              title="LinkedIn"
+              aria-label="LinkedIn"
+              >in</a
+            >
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+          <div class="footer-col-title">Quick Links</div>
+          <ul class="footer-links">
+            <li><a href="index.html#subjects">All Subjects</a></li>
+            <li><a href="Favorites.html">My Favorites</a></li>
+            <li><a href="doctors-news.html">Doctors News</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-col">
+          <div class="footer-col-title">Contact Info</div>
+          <ul class="footer-contact-list">
+            <li>
+              <span class="fc-icon">&#9993;</span> support@subjectsonline.com
+            </li>
+            <li><span class="fc-icon">&#9742;</span> +20 123 456 7890</li>
+            <li><span class="fc-icon">&#9679;</span> Cairo, Egypt</li>
+          </ul>
+          <a href="https://t.me/" target="_blank" class="footer-contact-btn"
+            >&#9992; Contact Us</a
+          >
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2026 Subjects Online. All rights reserved. Developed By Ahmed Tamer
+        for students worldwide.
+      </div>
+    </footer>
+
+    <!-- Modals -->
+    <div class="pdf-modal-overlay" id="pdf-modal-overlay">
+      <div class="pdf-modal">
+        <div class="pdf-modal-header">
+          <span class="pdf-modal-title" id="pdf-modal-title">Document</span>
+          <button class="pdf-modal-close" id="pdf-modal-close">✕</button>
+        </div>
+        <div class="pdf-modal-body">
+          <iframe id="pdf-iframe" title="PDF Viewer"></iframe>
+        </div>
+      </div>
     </div>
-    <div class="footer-bottom">
-      © 2026 Subjects Online. All rights reserved. Developed By Ahmed Tamer for students worldwide.
-    </div>
-  </footer>
-
-  <!-- Modals -->
-  <div class="pdf-modal-overlay" id="pdf-modal-overlay">
-    <div class="pdf-modal">
-      <div class="pdf-modal-header">
-        <span class="pdf-modal-title" id="pdf-modal-title">Document</span>
-        <button class="pdf-modal-close" id="pdf-modal-close">✕</button>
-      </div>
-      <div class="pdf-modal-body">
-        <iframe id="pdf-iframe" title="PDF Viewer"></iframe>
-      </div>
-    </div>
-  </div>
-  <div class="video-modal-overlay" id="video-modal-overlay">
-    <div class="video-modal">
-      <div class="video-modal-header">
-        <span class="pdf-modal-title" id="video-modal-title">Video Lesson</span>
-        <button class="video-modal-close" id="video-modal-close">✕</button>
-      </div>
-      <div class="video-wrapper">
-        <iframe id="video-iframe" allow="autoplay; fullscreen" allowfullscreen title="Video"></iframe>
+    <div class="video-modal-overlay" id="video-modal-overlay">
+      <div class="video-modal">
+        <div class="video-modal-header">
+          <span class="pdf-modal-title" id="video-modal-title"
+            >Video Lesson</span
+          >
+          <button class="video-modal-close" id="video-modal-close">✕</button>
+        </div>
+        <div class="video-wrapper">
+          <iframe
+            id="video-iframe"
+            allow="autoplay; fullscreen"
+            allowfullscreen
+            title="Video"></iframe>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div id="toast-container" class="toast-container"></div>
+    <div id="toast-container" class="toast-container"></div>
 
-  <script src="scripts/main.js"></script>
-  <script>
-    /* ── Subjects Data ───────────────────────────── */
-    const SUBJECTS = [
-      {
-        id: 'accounting',
-        title: 'Accounting',
-        desc: 'Financial principles, statements, and managerial accounting fundamentals.',
-        icon: '📊',
-        color: '#f472b6',
-        rgb: '244,114,182',
-        url: 'subjects/accounting.html',
-        sections: ['Course Content','Quizzes','Sections','Summaries','Q&A','Final Review']
-      },
-      {
-        id: 'ais',
-        title: 'AIS',
-        desc: 'Accounting Information Systems — data flow, controls and digital accounting.',
-        icon: '💻',
-        color: '#8b5cf6',
-        rgb: '139,92,246',
-        url: 'subjects/Ais.html',
-        sections: ['Course Content','Quizzes','Sections','Summaries','Q&A','Final Review']
-      },
-      {
-        id: 'economics',
-        title: 'Economics',
-        desc: 'Micro & macro economics, markets, supply and demand, GDP and more.',
-        icon: '📈',
-        color: '#34d399',
-        rgb: '52,211,153',
-        url: 'subjects/economics.html',
-        sections: ['Course Content','Quizzes','Sections','Summaries','Q&A','Final Review']
-      },
-      {
-        id: 'marketing',
-        title: 'Marketing',
-        desc: 'Marketing mix, consumer behavior, branding and digital strategies.',
-        icon: '📣',
-        color: '#fb923c',
-        rgb: '251,146,60',
-        url: 'subjects/Marketing.html',
-        sections: ['Course Content','Quizzes','Sections','Summaries','Q&A','Final Review']
-      },
-      {
-        id: 'political-science',
-        title: 'Political Science',
-        desc: 'Political systems, governance, international relations and public policy.',
-        icon: '🏛️',
-        color: '#60a5fa',
-        rgb: '96,165,250',
-        url: 'subjects/political-science.html',
-        sections: ['Course Content','Quizzes','Sections','Summaries','Q&A','Final Review']
-      },
-      {
-        id: 'english',
-        title: 'English',
-        desc: 'Academic writing, literature, grammar, comprehension and language skills.',
-        icon: '✍️',
-        color: '#fbbf24',
-        rgb: '251,191,36',
-        url: 'subjects/english.html',
-        sections: ['Course Content','Quizzes','Sections','Summaries','Q&A','Final Review']
-      },
-      {
-        id: 'statistics',
-        title: 'Statistics',
-        desc: 'Data analysis, probability, regression and statistical inference.',
-        icon: '📉',
-        color: '#a78bfa',
-        rgb: '167,139,250',
-        url: 'subjects/statistics.html',
-        sections: ['Course Content','Quizzes','Sections','Summaries','Q&A','Final Review']
-      },
-      {
-        id: 'Puplic-Finance',
-        title: 'Puplic Finance',
-        desc: 'Political systems, governance, international relations and public policy.',
-        icon: '🏛️',
-        color: '#60a5fa',
-        rgb: '96,165,250',
-        url: 'subjects/Puplic-Finance.html',
-        sections: ['Course Content','Quizzes','Sections','Summaries','Q&A','Final Review']
-      },
-    ];
+    <script src="scripts/main.js"></script>
+    <script>
+      /* ── Subjects Data ───────────────────────────── */
+      const SUBJECTS = [
+        {
+          id: "accounting",
+          title: "Accounting",
+          desc: "Financial principles, statements, and managerial accounting fundamentals.",
+          icon: "📊",
+          color: "#f472b6",
+          rgb: "244,114,182",
+          url: "subjects/accounting.html",
+          sections: [
+            "Course Content",
+            "Quizzes",
+            "Sections",
+            "Summaries",
+            "Q&A",
+            "Final Review",
+          ],
+        },
+        {
+          id: "ais",
+          title: "AIS",
+          desc: "Accounting Information Systems — data flow, controls and digital accounting.",
+          icon: "💻",
+          color: "#8b5cf6",
+          rgb: "139,92,246",
+          url: "subjects/Ais.html",
+          sections: [
+            "Course Content",
+            "Quizzes",
+            "Sections",
+            "Summaries",
+            "Q&A",
+            "Final Review",
+          ],
+        },
+        {
+          id: "economics",
+          title: "Economics",
+          desc: "Micro & macro economics, markets, supply and demand, GDP and more.",
+          icon: "📈",
+          color: "#34d399",
+          rgb: "52,211,153",
+          url: "subjects/economics.html",
+          sections: [
+            "Course Content",
+            "Quizzes",
+            "Sections",
+            "Summaries",
+            "Q&A",
+            "Final Review",
+          ],
+        },
+        {
+          id: "marketing",
+          title: "Marketing",
+          desc: "Marketing mix, consumer behavior, branding and digital strategies.",
+          icon: "📣",
+          color: "#fb923c",
+          rgb: "251,146,60",
+          url: "subjects/Marketing.html",
+          sections: [
+            "Course Content",
+            "Quizzes",
+            "Sections",
+            "Summaries",
+            "Q&A",
+            "Final Review",
+          ],
+        },
+        {
+          id: "political-science",
+          title: "Political Science",
+          desc: "Political systems, governance, international relations and public policy.",
+          icon: "🏛️",
+          color: "#60a5fa",
+          rgb: "96,165,250",
+          url: "subjects/political-science.html",
+          sections: [
+            "Course Content",
+            "Quizzes",
+            "Sections",
+            "Summaries",
+            "Q&A",
+            "Final Review",
+          ],
+        },
+        {
+          id: "english",
+          title: "English",
+          desc: "Academic writing, literature, grammar, comprehension and language skills.",
+          icon: "✍️",
+          color: "#fbbf24",
+          rgb: "251,191,36",
+          url: "subjects/english.html",
+          sections: [
+            "Course Content",
+            "Quizzes",
+            "Sections",
+            "Summaries",
+            "Q&A",
+            "Final Review",
+          ],
+        },
+        {
+          id: "statistics",
+          title: "Statistics",
+          desc: "Data analysis, probability, regression and statistical inference.",
+          icon: "📉",
+          color: "#a78bfa",
+          rgb: "167,139,250",
+          url: "subjects/statistics.html",
+          sections: [
+            "Course Content",
+            "Quizzes",
+            "Sections",
+            "Summaries",
+            "Q&A",
+            "Final Review",
+          ],
+        },
+        {
+          id: "Puplic-Finance",
+          title: "Puplic Finance",
+          desc: "Political systems, governance, international relations and public policy.",
+          icon: "🏛️",
+          color: "#60a5fa",
+          rgb: "96,165,250",
+          url: "subjects/Puplic-Finance.html",
+          sections: [
+            "Course Content",
+            "Quizzes",
+            "Sections",
+            "Summaries",
+            "Q&A",
+            "Final Review",
+          ],
+        },
+      ];
 
-    function renderSubjects(list) {
-      const grid = document.getElementById('subjects-grid');
-      const noRes = document.getElementById('no-results');
-      grid.innerHTML = '';
-      if (list.length === 0) { noRes.style.display = 'block'; return; }
-      noRes.style.display = 'none';
-      list.forEach((s, i) => {
-        const fav = isFavorite(s.id);
-        const card = document.createElement('a');
-        card.href = s.url;
-        card.className = 'subject-card reveal' + (fav ? ' is-fav' : '');
-        card.style.cssText = `
+      function renderSubjects(list) {
+        const grid = document.getElementById("subjects-grid");
+        const noRes = document.getElementById("no-results");
+        grid.innerHTML = "";
+        if (list.length === 0) {
+          noRes.style.display = "block";
+          return;
+        }
+        noRes.style.display = "none";
+        list.forEach((s, i) => {
+          const fav = isFavorite(s.id);
+          const card = document.createElement("a");
+          card.href = s.url;
+          card.className = "subject-card reveal" + (fav ? " is-fav" : "");
+          card.style.cssText = `
           --card-color:${s.color};
           --card-alpha:rgba(${s.rgb},0.06);
           --card-border-hover:rgba(${s.rgb},0.35);
           --card-shadow:rgba(${s.rgb},0.18);
           --card-icon-bg:rgba(${s.rgb},0.15);
-          animation-delay:${i*0.05}s;
+          animation-delay:${i * 0.05}s;
         `;
-        card.innerHTML = `
+          card.innerHTML = `
           <div class="fav-star">⭐</div>
           <div class="card-top">
             <div class="card-icon-wrap">${s.icon}</div>
-            <div class="card-arrow">→</div>
+            <div class="card-arrow">></div>
           </div>
           <div class="card-title">${s.title}</div>
           <div class="card-desc">${s.desc}</div>
           <div class="card-sections">
-            ${s.sections.map(sec => `<span class="card-section-badge">${sec}</span>`).join('')}
+            ${s.sections.map((sec) => `<span class="card-section-badge">${sec}</span>`).join("")}
           </div>
         `;
-        grid.appendChild(card);
-      });
-    }
-
-    renderSubjects(SUBJECTS);
-
-    /* Search */
-    const searchInput = document.getElementById('search-input');
-    searchInput.addEventListener('input', () => {
-      const q = searchInput.value.toLowerCase().trim();
-      renderSubjects(q ? SUBJECTS.filter(s => s.title.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q)) : SUBJECTS);
-    });
-
-    /* PWA Install Logic */
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('Service Worker registered', reg))
-          .catch(err => console.error('Service Worker auto-registration failed', err));
-      });
-    }
-
-    let deferredPrompt;
-    const navInstallBtn = document.getElementById('nav-install-btn');
-    const mobileInstallBtn = document.getElementById('mobile-install-btn');
-
-    // Handle the install prompt event
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      // Show both buttons (desktop and mobile nav)
-      navInstallBtn.style.display = 'inline-flex';
-      mobileInstallBtn.style.display = 'inline-flex';
-    });
-
-    const handleInstallClick = async (btn) => {
-      if (deferredPrompt) {
-        // Add downloading effect
-        btn.classList.add('downloading');
-        
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        
-        if (outcome === 'accepted') {
-          console.log('User accepted the install prompt');
-        } else {
-          console.log('User dismissed the install prompt');
-        }
-        btn.classList.remove('downloading');
-        deferredPrompt = null;
-      } else {
-        alert('الموقع متثبت بالفعل عندك كأبلكيشن، أو متصفحك مش بيدعم الخاصية دي حالياً.');
+          grid.appendChild(card);
+        });
       }
-    };
 
-    navInstallBtn.addEventListener('click', (e) => handleInstallClick(navInstallBtn));
-    mobileInstallBtn.addEventListener('click', (e) => {
+      renderSubjects(SUBJECTS);
+
+      /* Search */
+      const searchInput = document.getElementById("search-input");
+      searchInput.addEventListener("input", () => {
+        const q = searchInput.value.toLowerCase().trim();
+        renderSubjects(
+          q
+            ? SUBJECTS.filter(
+                (s) =>
+                  s.title.toLowerCase().includes(q) ||
+                  s.desc.toLowerCase().includes(q),
+              )
+            : SUBJECTS,
+        );
+      });
+
+      /* PWA Install Logic */
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("./sw.js")
+            .then((reg) => console.log("Service Worker registered", reg))
+            .catch((err) =>
+              console.error("Service Worker auto-registration failed", err),
+            );
+        });
+      }
+
+      let deferredPrompt;
+      const navInstallBtn = document.getElementById("nav-install-btn");
+      const mobileInstallBtn = document.getElementById("mobile-install-btn");
+
+      // Handle the install prompt event
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        // Show both buttons (desktop and mobile nav)
+        navInstallBtn.style.display = "inline-flex";
+        mobileInstallBtn.style.display = "inline-flex";
+      });
+
+      const handleInstallClick = async (btn) => {
+        if (deferredPrompt) {
+          // Add downloading effect
+          btn.classList.add("downloading");
+
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+
+          if (outcome === "accepted") {
+            console.log("User accepted the install prompt");
+          } else {
+            console.log("User dismissed the install prompt");
+          }
+          btn.classList.remove("downloading");
+          deferredPrompt = null;
+        } else {
+          alert(
+            "الموقع متثبت بالفعل عندك كأبلكيشن، أو متصفحك مش بيدعم الخاصية دي حالياً.",
+          );
+        }
+      };
+
+      navInstallBtn.addEventListener("click", (e) =>
+        handleInstallClick(navInstallBtn),
+      );
+      mobileInstallBtn.addEventListener("click", (e) => {
         e.preventDefault(); // Prevent navigating to #
         handleInstallClick(mobileInstallBtn);
-    });
+      });
 
-    window.addEventListener('appinstalled', () => {
-      navInstallBtn.style.display = 'none';
-      mobileInstallBtn.style.display = 'none';
-      console.log('App was installed successfully!');
-    });
-  </script>
-</body>
+      window.addEventListener("appinstalled", () => {
+        navInstallBtn.style.display = "none";
+        mobileInstallBtn.style.display = "none";
+        console.log("App was installed successfully!");
+      });
+    </script>
+  </body>
 </html>
