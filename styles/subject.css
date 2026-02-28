@@ -335,8 +335,8 @@
    ================================================================ */
 
 .chapter-accordion {
-  background: var(--bg-card);
-  border: 1px solid var(--glass-border);
+  background: rgb(0 0 0 / 24%);
+  border: 3px solid var(--glass-border);
   border-radius: var(--radius-lg);
   overflow: hidden;
   transition: var(--transition);
