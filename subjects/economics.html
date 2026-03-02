@@ -14,14 +14,18 @@
     <link rel="stylesheet" href="../styles/main.css" />
     <link rel="stylesheet" href="../styles/subject.css" />
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K8RPX2BHDW"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-K8RPX2BHDW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-  gtag('config', 'G-K8RPX2BHDW');
-</script>
+      gtag("config", "G-K8RPX2BHDW");
+    </script>
     <style>
       :root {
         --subject-color: #34d399;
@@ -726,7 +730,14 @@
             title: "Chapter 2 Videos",
             icon: "🎬",
             id: "eco-vid-ch2",
-            lectures: [],
+            lectures: [
+              {
+                title: "Lect 4 Dr.Hannan",
+                path: "../pdfs/economics/Lect 4.mp4",
+                size: "63.7 MB",
+                date: "2026-03-2",
+              },
+            ],
           },
           {
             title: "Chapter 3 Videos",
