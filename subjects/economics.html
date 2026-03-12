@@ -102,6 +102,9 @@
           <button class="tab-btn active" data-tab="content">
             <span class="tab-icon">📖</span> Course Content
           </button>
+          <button class="tab-btn" data-tab="videos">
+            <span class="tab-icon">🎬</span> Videos
+          </button>
           <button class="tab-btn" data-tab="quizzes">
             <span class="tab-icon">✏️</span> Quizzes
           </button>
@@ -114,12 +117,9 @@
           <button class="tab-btn" data-tab="qa">
             <span class="tab-icon">❓</span> Questions & Answers
           </button>
-          <button class="tab-btn" data-tab="final">
+          <!-- <button class="tab-btn" data-tab="final">
             <span class="tab-icon">🏆</span> Final Review
-          </button>
-          <button class="tab-btn" data-tab="videos">
-            <span class="tab-icon">🎬</span> Videos
-          </button>
+          </button> -->
         </div>
       </div>
       <div class="tabs-content">
@@ -596,11 +596,14 @@
                 size: "1.742 KB",
                 date: "2026-02-23",
               },
-              
             ],
           },
-          { title: "Chapter 2", icon: "📈", id: "eco-cont-ch2", lectures: [
-            {
+          {
+            title: "Chapter 2",
+            icon: "📈",
+            id: "eco-cont-ch2",
+            lectures: [
+              {
                 title: "Lect 4 Dr.Hannan",
                 path: "../pdfs/economics/Lect 4 (ECO) (S.O).pdf",
                 size: "1.4 MB",
@@ -612,7 +615,8 @@
                 size: "2.5 MB",
                 date: "2026-03-12",
               },
-          ] },
+            ],
+          },
           { title: "Chapter 3", icon: "📈", id: "eco-cont-ch3", lectures: [] },
           { title: "Chapter 4", icon: "📈", id: "eco-cont-ch4", lectures: [] },
         ],
@@ -623,14 +627,19 @@
           { title: "Quiz 4", icon: "✏️", id: "eco-quiz-4", lectures: [] },
         ],
         sections: [
-          { title: "Section 1", icon: "📝", id: "eco-sec-1", lectures: [
-            {
+          {
+            title: "Section 1",
+            icon: "📝",
+            id: "eco-sec-1",
+            lectures: [
+              {
                 title: 'Section 1-2 "HandWriting"',
                 path: "../pdfs/economics/Section1-2(Eco) (S.O).pdf",
                 size: "1119 KB",
                 date: "2026-03-12",
               },
-          ] },
+            ],
+          },
           { title: "Section 2", icon: "📝", id: "eco-sec-2", lectures: [] },
           { title: "Section 3", icon: "📝", id: "eco-sec-3", lectures: [] },
           { title: "Section 4", icon: "📝", id: "eco-sec-4", lectures: [] },
@@ -764,7 +773,6 @@
                 size: "60.1 MB",
                 date: "2026-03-8",
               },
-              
             ],
           },
           {
