@@ -600,7 +600,7 @@ const CONTENT = {
           id: "lec1",
           title: "Lect 1 Dr.S.R",
           type: "file",
-          content: "./pdfs/ais/lect_1 summary.pdf",
+          content: "/pdfs/ais/lect_1 summary.pdf",
         },
         {
           id: "lec2",
