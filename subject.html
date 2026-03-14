@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Doctors News — Subjects Online</title>
+  <title>Subject — Subjects Online</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -30,19 +30,53 @@
 </div></div>
 <div class="menu-backdrop"></div>
 
-<div class="page dn-page">
+<div class="page subject-page">
   <div class="bg-wrap"><div class="orb orb1"></div><div class="orb orb2"></div><div class="grid-bg"></div></div>
   <div class="container" style="position:relative;z-index:1">
-    <div class="dn-header">
-      <div class="badge au">🩺 Doctors News</div>
-      <h1 class="au d1">Professor <span class="g-text">Announcements</span></h1>
-      <p class="au d2">Latest notes, updates, and announcements from your professors — all in one place</p>
+    <!-- Back -->
+    <div class="subj-back au"><a href="subjects.html" class="back-link">← Back to Subjects</a></div>
+
+    <!-- Header -->
+    <div class="subj-header au d1">
+      <div class="subj-icon" id="subj-icon" style="display:flex;align-items:center;justify-content:center"></div>
+      <div class="subj-info">
+        <div class="badge" style="margin-bottom:10px"><span id="subj-name-ar"></span></div>
+        <h1 id="subj-name"></h1>
+        <p id="subj-desc"></p>
+      </div>
     </div>
-    <div class="empty-state glass as">
-      <span class="empty-icon">📢</span>
-      <h3>No Announcements Yet</h3>
-      <p>Professor updates and notes will appear here once uploaded.</p>
+
+    <!-- Layout -->
+    <div class="subj-layout">
+      <!-- Sidebar -->
+      <aside class="sec-sidebar glass au d2" id="sec-sidebar"></aside>
+
+      <!-- Content -->
+      <main class="sec-main">
+        <div class="sec-hdr glass as" id="sec-hdr"></div>
+        <div class="chapters-list" id="chapters-list"></div>
+      </main>
     </div>
+  </div>
+</div>
+
+<!-- MEDIA VIEWER -->
+<div class="mv-overlay" id="mv-overlay">
+  <div class="mv-panel">
+    <div class="mv-header">
+      <div class="mv-left">
+        <span class="mv-type-icon" id="mv-type-icon">📄</span>
+        <div class="mv-ttl-wrap">
+          <span class="mv-title" id="mv-title"></span>
+          <span class="mv-sub" id="mv-sub"></span>
+        </div>
+      </div>
+      <div class="mv-right">
+        <a class="mv-btn mv-dl" id="mv-dl" href="#" download>⬇ Download</a>
+        <button class="mv-btn mv-close" onclick="closeViewer()">✕</button>
+      </div>
+    </div>
+    <div class="mv-body" id="mv-body"></div>
   </div>
 </div>
 
