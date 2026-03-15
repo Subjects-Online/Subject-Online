@@ -590,7 +590,7 @@ function renderProgressSection() {
     const vidPct = tot.videos > 0 ? (p.videos.length / tot.videos) * 100 : 0;
 
     return `
-      <a href="subject.html?id=${sub.id}" class="sp-card au" style="animation-delay:${i * 0.1}s; text-decoration:none">
+      <div class="sp-card au active" style="animation-delay:${i * 0.1}s">
         <div class="sp-header">
           <div class="sp-icon" style="background:linear-gradient(${sub.grad})">${sub.icon}</div>
           <div class="sp-title">${sub.name}</div>
@@ -599,18 +599,19 @@ function renderProgressSection() {
           <div class="sp-stat-row">
             <span style="width:40px">PDFs</span>
             <div class="sp-bar-bg"><div class="sp-bar-fg" style="width:${pdfPct}%; background:#ec4899"></div></div>
-            <span>${p.pdfs.length}/${tot.pdfs}</span>
+            <span style="width:40px; text-align:right">${p.pdfs.length}/${tot.pdfs}</span>
           </div>
           <div class="sp-stat-row">
             <span style="width:40px">Vids</span>
             <div class="sp-bar-bg"><div class="sp-bar-fg" style="width:${vidPct}%; background:#3b82f6"></div></div>
-            <span>${p.videos.length}/${tot.videos}</span>
+            <span style="width:40px; text-align:right">${p.videos.length}/${tot.videos}</span>
           </div>
         </div>
-      </a>
+      </div>
     `;
   }).join("");
 }
+
 
 // ===== HOME GREETING =====
 function renderGreeting() {
