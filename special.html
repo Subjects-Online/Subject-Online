@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Special Archive | Subjects Online</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    .special-page { padding-top: 100px; padding-bottom: 60px; }
+    .sp-header { text-align: center; margin-bottom: 50px; }
+    .sp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+    .sp-card { background: var(--card); border: 2px solid var(--border); border-radius: 24px; padding: 30px; transition: all var(--tr); display: flex; flex-direction: column; gap: 20px; position: relative; overflow: hidden; }
+    .sp-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+    .sp-card-icon { width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 30px; background: var(--surface); color: var(--accent); }
+    .sp-card-head { display: flex; align-items: center; gap: 18px; }
+    .sp-card-info h3 { font-size: 22px; font-weight: 800; margin: 0; }
+    .sp-card-info p { font-size: 13px; color: var(--muted); margin: 5px 0 0; }
+    .sp-list { display: flex; flex-direction: column; gap: 12px; }
+    .sp-item { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--text); padding: 12px 16px; border-radius: 12px; background: var(--surface); text-decoration: none; border: 1px solid transparent; transition: all var(--tr); }
+    .sp-item:hover { background: var(--bg2); border-color: var(--accent); color: var(--accent); transform: scale(1.02); }
+    .sp-item i { font-style: normal; font-size: 18px; }
+    .sp-badge { position: absolute; top: 20px; right: 20px; font-size: 10px; font-weight: 900; background: var(--accent); color: white; padding: 5px 12px; border-radius: 99px; }
+  </style>
+</head>
+
+<body>
+  <div class="app-wrap">
+    <!-- Navbar -->
+    <nav class="main-nav">
+      <div class="container nav-container">
+        <a href="index.html" class="nav-logo">
+          <span>📚</span>
+          <span class="logo-text">Subjects<span class="logo-accent">Online</span></span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="subjects.html" class="nav-link">Subjects</a>
+          <a href="doctors-news.html" class="nav-link">News</a>
+          <a href="favorites.html" class="nav-link">Favorites</a>
+          <a href="special.html" class="nav-link active">Archive</a>
+        </div>
+        <div class="nav-actions">
+           <button class="theme-btn" onclick="toggleTheme()" title="Toggle Theme">
+            <span class="theme-ico">🌙</span>
+          </button>
+          <button class="hamburger">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+      <div class="mobile-links">
+        <a href="index.html" class="mobile-link">Home</a>
+        <a href="subjects.html" class="mobile-link">Subjects</a>
+        <a href="doctors-news.html" class="mobile-link">News</a>
+        <a href="favorites.html" class="mobile-link">Favorites</a>
+        <a href="special.html" class="mobile-link active">Archive</a>
+      </div>
+    </div>
+    <div class="menu-backdrop"></div>
+
+    <!-- Main Content -->
+    <main class="special-page au">
+      <div class="container">
+        <div class="sp-header">
+          <div class="badge au">💎 Premium Collection</div>
+          <h1 class="au d1">Special <span class="g-text">Archive</span></h1>
+          <p class="au d2">An independent library of core subjects. Exclusive PDF materials & Interactive Study mode.</p>
+        </div>
+        <div class="sp-grid" id="special-page-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <p>&copy; 2026 Subjects Online. Dev By Ahmed Tamer.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Media Viewer Overlay -->
+  <div class="mv-overlay" id="mv-overlay">
+    <div class="mv-container glass">
+      <div class="mv-header">
+        <div class="mv-h-left">
+          <div class="mv-icon" id="mv-type-icon">📄</div>
+          <div>
+            <h3 id="mv-title">Document Title</h3>
+            <span id="mv-sub">PDF Document</span>
+          </div>
+        </div>
+        <div class="mv-h-right">
+          <button class="mv-btn" id="mv-interactive-toggle" style="display:none; background:var(--accent); color:white; border:none; padding:6px 14px; border-radius:99px; font-weight:700; font-size:12px; margin-right:8px;" onclick="toggleInteractiveMode()">✨ Interactive Mode</button>
+          <a href="#" class="mv-btn" id="mv-dl" title="Download">⬇️</a>
+          <button class="mv-btn" onclick="closeViewer()" title="Close">✕</button>
+        </div>
+      </div>
+      <div class="mv-body" id="mv-body"></div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+       renderSpecialPage();
+    });
+  </script>
+</body>
+
+</html>

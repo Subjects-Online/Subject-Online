@@ -146,20 +146,28 @@ const CONTENT = {
       [
         {
           id: "lec1",
-          title: "Lect 1-2 Dr.MZ",
+          title: "Introduction to PPE",
           type: "file",
-          content:
-            "./pdfs/accounting/Acquisition__Disposition_of_Property_Plant_and_Equipment.pdf",
+          content: "./pdfs/accounting/Acquisition__Disposition_of_Property_Plant_and_Equipment.pdf",
+          interactive: [
+            { title: "What is PPE?", content: "Property, Plant, and Equipment (PPE) are tangible assets used in business operations for more than one period." },
+            { title: "Initial Measurement", content: "PPE is initially measured at cost, including purchase price and any directly attributable costs." },
+            { title: "Subsequent Costs", content: "Day-to-day servicing costs are recognized in profit or loss, while major replacements are capitalized." }
+          ]
         },
         {
           id: "lec2",
-          title: "Lect 3 Dr.MZ",
+          title: "Asset Exchanges",
           type: "file",
           content: "./pdfs/accounting/Non-Monetary_Asset_Exchanges.pdf",
+          interactive: [
+            { title: "Non-Monetary Exchanges", content: "Occurs when an asset is acquired in exchange for a non-monetary asset or a combination of monetary and non-monetary assets." },
+            { title: "Commercial Substance", content: "An exchange has commercial substance if the future cash flows of the entity are expected to change significantly as a result of the transaction." }
+          ]
         },
         {
           id: "lec3",
-          title: "Lects 'HandWriting' Dr.MZ",
+          title: "HandWriting Notes",
           type: "file",
           content: "./pdfs/accounting/Lects(Acc.) (S.O).pdf",
         },
@@ -245,9 +253,13 @@ const CONTENT = {
       [
         {
           id: "lec1",
-          title: "Lect 1 Dr.Hannan",
+          title: "Cardinal Utility Theory",
           type: "file",
           content: "./pdfs/economics/Lect_1_Cardinal_Utility_Theory.pdf",
+          interactive: [
+            { title: "What is Utility?", content: "Utility is the satisfaction or benefit derived from consuming a product." },
+            { title: "Law of Diminishing Marginal Utility", content: "As more of a good is consumed, the additional satisfaction from another unit decreases." }
+          ]
         },
         {
           id: "lec2",
@@ -425,7 +437,18 @@ const CONTENT = {
     ],
   },
   //-------------------------------------------------------------
-  "political-science": {},
+  "political-science": {
+    "course-content": [
+      [
+        {
+          id: "pol1",
+          title: "Introduction to Political Science",
+          type: "file",
+          content: "./pdfs/political-science/Intro.pdf"
+        }
+      ]
+    ]
+  },
   //-------------------------------------------------------------
   marketing: {
     "course-content": [
@@ -516,7 +539,23 @@ const CONTENT = {
     ],
   },
   //-------------------------------------------------------------
-  statistics: {},
+  statistics: {
+    "course-content": [
+      [
+        {
+          id: "stat1",
+          title: "Probability Distribution",
+          type: "file",
+          content: "./pdfs/statistics/Prob_Dist.pdf",
+          interactive: [
+            { title: "Random Variables", content: "A random variable is a numerical description of the outcome of an experiment." },
+            { title: "Discrete vs Continuous", content: "Discrete variables have countable outcomes, while continuous variables can take any value in an interval." },
+            { title: "Expected Value", content: "The mean or expected value of a random variable is the weighted average of all possible values." }
+          ]
+        }
+      ]
+    ]
+  },
   //----------------------------------------------
   ais: {
     "course-content": [
@@ -637,3 +676,7 @@ function getChapters(subjectId, sectionId) {
     { id: "ch4", title: "Chapter 4", lectures: raw[3] || [] },
   ];
 }
+
+// Add closeViewer reset to main.js if needed - I'll do it separately or here if I find it.
+// Actually I'll update closeViewer in main.js.
+

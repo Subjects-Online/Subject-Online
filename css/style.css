@@ -1620,6 +1620,35 @@ body {
 .sr-name { font-size: 14px; font-weight: 700; line-height: 1.3; }
 .sr-type { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
 
+/* ==================== SPECIAL SUBJECTS SECTION ==================== */
+.special-subjects-sec { padding: 80px 0; background: rgba(255, 255, 255, 0.02); position: relative; z-index: 1; }
+.special-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-top: 40px; }
+.special-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 16px; transition: all var(--tr); cursor: pointer; position: relative; overflow: hidden; }
+.special-card:hover { transform: translateY(-8px); border-color: var(--accent); background: var(--bg2); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+.special-card-icon { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; background: var(--surface); color: var(--accent); }
+.special-card-head { display: flex; align-items: center; gap: 14px; }
+.special-card-info h3 { font-size: 18px; font-weight: 700; margin: 0; }
+.special-card-info span { font-size: 12px; color: var(--muted); text-transform: uppercase; font-weight: 600; }
+.special-card-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.special-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text); padding: 8px 12px; border-radius: 8px; background: var(--surface); border: 1px solid transparent; transition: all var(--tr); text-decoration: none; }
+.special-item:hover { background: var(--surface-h); border-color: var(--border-h); color: var(--accent); }
+.special-item i { font-style: normal; font-size: 14px; }
+.special-badge { position: absolute; top: 16px; right: 16px; font-size: 10px; font-weight: 800; background: var(--accent); color: white; padding: 4px 10px; border-radius: 99px; text-transform: uppercase; }
+
+/* ==================== INTERACTIVE VIEWER ==================== */
+.interactive-viewer { height: 100%; display: flex; flex-direction: column; background: var(--bg); position: relative; }
+.iv-progress-bar { height: 6px; background: var(--surface); width: 100%; position: sticky; top: 0; z-index: 10; }
+.iv-progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.4s ease; box-shadow: 0 0 15px var(--glow); }
+.iv-container { flex: 1; overflow-y: auto; padding: 40px 20px; display: flex; align-items: center; justify-content: center; position: relative; }
+.iv-step { display: none; width: 100%; max-width: 700px; animation: fadeUp 0.4s ease both; }
+.iv-step.active { display: block; }
+.iv-card { padding: 40px; text-align: center; display: flex; flex-direction: column; gap: 24px; }
+.iv-card-num { font-size: 12px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; }
+.iv-card h2 { font-size: clamp(24px, 4vw, 36px); font-weight: 800; margin: 0; }
+.iv-card p { font-size: 18px; color: var(--muted); line-height: 1.6; margin: 0; }
+.iv-img { width: 100%; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+.iv-actions { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 10px; }
+
 /* ==================== SETTINGS PAGE ==================== */
 .settings-page {
   padding-top: 110px;

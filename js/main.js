@@ -196,6 +196,7 @@ function renderHomeCards() {
     { href: "doctors-news.html", icon: "📰", title: "Doctors News", desc: "Latest announcements, notes, and updates from your professors — delivered instantly.", grad: "135deg,#059669,#06b6d4", color: "#059669", tag1: "Stay Updated", tag2: "All Professors", pills: ["Announcements", "Notes", "Reminders", "Updates"] },
     { href: "personal-dev.html", icon: "🌱", title: "Self Development", desc: "Build the mindset, habits, and skills that make you unstoppable beyond the classroom.", grad: "135deg,#f59e0b,#ec4899", color: "#f59e0b", tag1: "Grow Every Day", tag2: "6 Categories", pills: ["Mindset", "Productivity", "Focus", "Goal Setting"] },
     { href: "favorites.html", icon: "⭐", title: "Favorites", desc: "Easily access your saved lectures, summaries, and videos in one convenient place.", grad: "135deg,#eab308,#f97316", color: "#eab308", tag1: "Quick Access", tag2: "Your Picks", pills: ["Saved Items", "Bookmarks", "Quick Nav"] },
+    { href: "special.html", icon: "💎", title: "Special Archive", desc: "Exclusive PDF materials & interactive study mode for top core subjects.", grad: "135deg,#6366f1,#a855f7", color: "#a855f7", tag1: "Premium", tag2: "PDF & Interactive", pills: ["Elite Content", "Smart Study", "Fast Access"] },
   ];
 
   container.innerHTML = cards.map((c, i) => `
@@ -440,6 +441,19 @@ function openViewer(lec, subjectId) {
     body.innerHTML = `<div class="mv-empty-state"><span>📂</span><p>No preview available.</p></div>`;
   }
 
+  const interactiveBtn = document.getElementById("mv-interactive-toggle");
+  if (interactiveBtn) {
+    // Only allow for Statistics
+    if (subjectId === 'statistics' || (lec.interactive && lec.interactive.length > 0)) {
+       interactiveBtn.style.display = "inline-block";
+       interactiveBtn.dataset.lecId = lec.id;
+       interactiveBtn.dataset.subId = subjectId;
+       interactiveBtn.textContent = "✨ Interactive Mode";
+    } else {
+       interactiveBtn.style.display = "none";
+    }
+  }
+
   overlay.classList.add("open");
   document.body.style.overflow = "hidden";
 
@@ -449,11 +463,114 @@ function openViewer(lec, subjectId) {
     localStorage.setItem("so_pending_progress", JSON.stringify({
       subjectId,
       lecId: lec.id,
-      content: lec.content,
-      type: lec.type,
-      title: lec.title
+      timestamp: Date.now()
     }));
   }
+}
+
+let isInteractive = false;
+function toggleInteractiveMode() {
+  const btn = document.getElementById("mv-interactive-toggle");
+  const subId = btn.dataset.subId;
+  const lecId = btn.dataset.lecId;
+  const body = document.getElementById("mv-body");
+
+  isInteractive = !isInteractive;
+
+  if (isInteractive) {
+    btn.textContent = "📄 View PDF";
+    btn.style.background = "var(--bg2)";
+    renderInteractiveStats(subId, lecId);
+  } else {
+    btn.textContent = "✨ Interactive Mode";
+    btn.style.background = "var(--accent)";
+    // Re-trigger openViewer logic for PDF
+    const subjectContent = CONTENT[subId];
+    let lecItem = null;
+    Object.values(subjectContent).forEach(sec => {
+      sec.forEach(ch => {
+        const found = ch.find(l => l.id === lecId);
+        if (found) lecItem = found;
+      });
+    });
+    if (lecItem) {
+      body.innerHTML = `<iframe class="mv-iframe" src="${lecItem.content}" title="${lecItem.title}"></iframe>`;
+    }
+  }
+}
+
+function renderInteractiveStats(subId, lecId) {
+  const body = document.getElementById("mv-body");
+  const subjectContent = CONTENT[subId];
+  let lecItem = null;
+  Object.values(subjectContent).forEach(sec => {
+    sec.forEach(ch => {
+      const found = ch.find(l => l.id === lecId);
+      if (found) lecItem = found;
+    });
+  });
+
+  if (!lecItem || !lecItem.interactive) {
+    body.innerHTML = `<div class="mv-empty-state"><p>Interactive content not available for this item.</p></div>`;
+    return;
+  }
+
+  body.innerHTML = `
+    <div class="interactive-viewer">
+      <div class="iv-progress-bar"><div class="iv-progress-fill" id="iv-prog" style="width: 0%"></div></div>
+      <div class="iv-container" id="iv-container">
+        ${lecItem.interactive.map((step, idx) => `
+          <div class="iv-step ${idx === 0 ? 'active' : ''}" id="step-${idx}">
+            <div class="iv-card glass">
+              <div class="iv-card-num">Step ${idx + 1}</div>
+              <h2>${step.title}</h2>
+              <p>${step.content}</p>
+              ${step.image ? `<img src="${step.image}" class="iv-img" />` : ''}
+              <div class="iv-actions">
+                ${idx > 0 ? `<button class="btn btn-ghost" onclick="showStep(${idx - 1})">Back</button>` : ''}
+                ${idx < lecItem.interactive.length - 1 ? 
+                  `<button class="btn btn-primary" onclick="showStep(${idx + 1})">Next Step</button>` : 
+                  `<button class="btn btn-primary" onclick="completeInteractive('${subId}', '${lecId}')">Finish Lesson</button>`}
+              </div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+}
+
+window.showStep = function(idx) {
+  document.querySelectorAll(".iv-step").forEach(s => s.classList.remove("active"));
+  document.getElementById(`step-${idx}`).classList.add("active");
+  const steps = document.querySelectorAll(".iv-step").length;
+  const progress = ((idx + 1) / steps) * 100;
+  document.getElementById("iv-prog").style.width = `${progress}%`;
+}
+
+window.completeInteractive = function(subId, lecId) {
+  alert("Great job! You've completed this interactive lesson.");
+  // Add to progress
+  const progress = JSON.parse(localStorage.getItem("so_progress") || "{}");
+  if (!progress[subId]) progress[subId] = { pdfs: [], videos: [] };
+  if (!progress[subId].pdfs.includes(lecId)) progress[subId].pdfs.push(lecId);
+  localStorage.setItem("so_progress", JSON.stringify(progress));
+  
+  // Update UI and close
+  renderProgressSection();
+  closeViewer();
+}
+
+function closeViewer() {
+  const overlay = document.getElementById("mv-overlay");
+  if (!overlay) return;
+  overlay.classList.remove("open");
+  document.body.style.overflow = "";
+  const body = document.getElementById("mv-body");
+  body.innerHTML = "";
+  isInteractive = false;
+  const btn = document.getElementById("mv-interactive-toggle");
+  if (btn) btn.style.display = "none";
 }
 
 function askProgress(pending) {
@@ -522,9 +639,16 @@ function saveProgress(subjectId, lec) {
 
 function closeViewer() {
   const overlay = document.getElementById("mv-overlay");
-  if (overlay) { overlay.classList.remove("open"); document.body.style.overflow = ""; }
+  if (!overlay) return;
+  overlay.classList.remove("open");
+  document.body.style.overflow = "";
+  
   const body = document.getElementById("mv-body");
   if (body) body.innerHTML = "";
+  
+  isInteractive = false;
+  const btn = document.getElementById("mv-interactive-toggle");
+  if (btn) btn.style.display = "none";
 
   const pendingStr = localStorage.getItem("so_pending_progress");
   if (pendingStr) {
@@ -1095,6 +1219,8 @@ document.addEventListener("DOMContentLoaded", () => {
   renderSettingsPage();
 });
 
+
+
 // ===== DASHBOARD =====
 function renderDashboard() {
   const container = document.querySelector(".dashboard-page");
@@ -1242,3 +1368,54 @@ function renderRecents() {
   }).join("");
 }
 
+
+// ===== SPECIAL PAGE =====
+function renderSpecialPage() {
+  const grid = document.getElementById("special-page-grid");
+  if (!grid) return;
+
+  const targetIds = ["accounting", "eco", "political-science", "statistics"];
+  const subjects = SUBJECTS.filter(s => targetIds.includes(s.id));
+
+  grid.innerHTML = subjects.map(s => {
+    const materials = [];
+    const subContent = CONTENT[s.id] || {};
+    
+    // Flatten and find all PDFs
+    Object.values(subContent).forEach(section => {
+      if (Array.isArray(section)) {
+        section.forEach(chapter => {
+          if (Array.isArray(chapter)) {
+            chapter.forEach(lec => {
+              if (lec.type === 'file') {
+                materials.push(lec);
+              }
+            });
+          }
+        });
+      }
+    });
+
+    return `
+      <div class="sp-card au">
+        <div class="sp-badge">ELITE ARCHIVE</div>
+        <div class="sp-card-head">
+          <div class="sp-card-icon" style="background:linear-gradient(${s.grad}); color:white;">${s.icon}</div>
+          <div class="sp-card-info">
+            <h3>${s.name}</h3>
+            <p>${materials.length} Premium Documents</p>
+          </div>
+        </div>
+        <div class="sp-list">
+          ${materials.length > 0 ? materials.map(m => `
+            <a href="#" class="sp-item" onclick="openViewer(${JSON.stringify(m).replace(/"/g, '&quot;')}, '${s.id}'); return false;">
+              <i>📄</i>
+              <span>${m.title}</span>
+            </a>
+          `).join("") : '<div style="padding:20px; color:var(--muted); font-size:13px;">Coming soon...</div>'}
+        </div>
+        <a href="subject.html?id=${s.id}" class="btn btn-ghost" style="width:100%; margin-top:10px; font-size:11px;">View All in Subject Browser</a>
+      </div>
+    `;
+  }).join("");
+}
