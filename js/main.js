@@ -4,17 +4,29 @@
 //          chapter accordion, media viewer
 // ================================================================
 
-// ===== THEME =====
+// ===== THEME & SETTINGS =====
+function getSettings() {
+  const defaults = { name: "", theme: "dark", favSubject: "", sortMode: "default" };
+  const saved = localStorage.getItem("so_settings");
+  return saved ? { ...defaults, ...JSON.parse(saved) } : defaults;
+}
+function updateSettings(newSettings) {
+  const current = getSettings();
+  const updated = { ...current, ...newSettings };
+  localStorage.setItem("so_settings", JSON.stringify(updated));
+  return updated;
+}
 function initTheme() {
-  const saved = localStorage.getItem("so-theme") || "dark";
-  document.documentElement.setAttribute("data-theme", saved);
-  updateThemeBtn(saved);
+  const settings = getSettings();
+  const theme = settings.theme || "dark";
+  document.documentElement.setAttribute("data-theme", theme);
+  updateThemeBtn(theme);
 }
 function toggleTheme() {
   const current = document.documentElement.getAttribute("data-theme");
   const next = current === "dark" ? "light" : "dark";
   document.documentElement.setAttribute("data-theme", next);
-  localStorage.setItem("so-theme", next);
+  updateSettings({ theme: next });
   updateThemeBtn(next);
 }
 function updateThemeBtn(theme) {
@@ -103,7 +115,25 @@ function renderSubjectCards() {
   const grid = document.getElementById("subjects-grid");
   if (!grid || typeof SUBJECTS === "undefined") return;
 
-  grid.innerHTML = SUBJECTS.map((s, i) => {
+  const settings = getSettings();
+  let sortedSubjects = [...SUBJECTS];
+  
+  if (settings.sortMode === "alphabetical") {
+    sortedSubjects.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (settings.sortMode === "reverse") {
+    sortedSubjects.reverse();
+  }
+  
+  // If a favorite subject is set, bring it to front
+  if (settings.favSubject) {
+    const favIdx = sortedSubjects.findIndex(s => s.id === settings.favSubject);
+    if (favIdx > -1) {
+      const [fav] = sortedSubjects.splice(favIdx, 1);
+      sortedSubjects.unshift(fav);
+    }
+  }
+
+  grid.innerHTML = sortedSubjects.map((s, i) => {
     const isFav = isFavorite("subject", s.id);
     return `
     <a href="subject.html?id=${s.id}" class="subject-card" style="animation-delay:${i * 0.07}s">
@@ -573,6 +603,77 @@ function renderProgressSection() {
   }).join("");
 }
 
+// ===== HOME GREETING =====
+function renderGreeting() {
+  const container = document.getElementById("home-greeting");
+  if (!container) return;
+  
+  const settings = getSettings();
+  if (settings.name) {
+    container.innerHTML = `
+      <div class="greeting-wrap au d1">
+        <h2>Hello, <span class="g-text">${settings.name}</span>! 👋</h2>
+        <p>Glad to see you back. What are we studying today?</p>
+      </div>
+    `;
+  } else {
+    container.innerHTML = `
+      <div class="greeting-wrap au d1">
+        <h2>Welcome to <span class="g-text">Subjects Online</span></h2>
+        <p>Stay organized, study smart, and level up your skills.</p>
+      </div>
+    `;
+  }
+}
+
+// ===== SETTINGS PAGE =====
+function renderSettingsPage() {
+  const container = document.getElementById("settings-container");
+  if (!container || typeof SUBJECTS === "undefined") return;
+
+  const settings = getSettings();
+  
+  // Fill inputs
+  const nameInput = document.getElementById("set-name");
+  if (nameInput) nameInput.value = settings.name || "";
+  
+  const sortSelect = document.getElementById("set-sort");
+  if (sortSelect) sortSelect.value = settings.sortMode || "default";
+  
+  const themeSelect = document.getElementById("set-theme");
+  if (themeSelect) themeSelect.value = settings.theme || "dark";
+  
+  const favSubjectSelect = document.getElementById("set-fav-sub");
+  if (favSubjectSelect) {
+    favSubjectSelect.innerHTML = `<option value="">None</option>` + 
+      SUBJECTS.map(s => `<option value="${s.id}" ${settings.favSubject === s.id ? "selected" : ""}>${s.name}</option>`).join("");
+  }
+}
+
+window.saveUserSettings = function() {
+  const name = document.getElementById("set-name").value;
+  const sortMode = document.getElementById("set-sort").value;
+  const theme = document.getElementById("set-theme").value;
+  const favSubject = document.getElementById("set-fav-sub").value;
+  
+  updateSettings({ name, sortMode, theme, favSubject });
+  
+  // Apply theme immediately
+  document.documentElement.setAttribute("data-theme", theme);
+  updateThemeBtn(theme);
+  
+  const saveBtn = document.querySelector(".save-settings-btn");
+  if (saveBtn) {
+    const originalText = saveBtn.textContent;
+    saveBtn.textContent = "✅ Saved!";
+    saveBtn.classList.add("success");
+    setTimeout(() => {
+      saveBtn.textContent = originalText;
+      saveBtn.classList.remove("success");
+    }, 2000);
+  }
+};
+
 // ===== FAVORITES PAGE =====
 function renderFavoritesPage() {
   const container = document.getElementById("fav-container");
@@ -784,4 +885,6 @@ document.addEventListener("DOMContentLoaded", () => {
   checkPendingProgress();
   initAiAssistant();
   renderFavoritesPage();
+  renderGreeting();
+  renderSettingsPage();
 });
