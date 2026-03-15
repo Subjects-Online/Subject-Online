@@ -60,13 +60,54 @@ function initNavbar() {
   });
 }
 
+// ===== FAVORITES LOGIC =====
+function getFavorites() {
+  return JSON.parse(localStorage.getItem("so_favorites") || '{"subjects":[],"items":[]}');
+}
+function isFavorite(type, subjectId, lecId = null) {
+  const favs = getFavorites();
+  if (type === "subject") return favs.subjects.includes(subjectId);
+  if (type === "item") return favs.items.some(i => i.subjectId === subjectId && i.lecId === lecId);
+  return false;
+}
+window.toggleFavorite = function(e, type, subjectId, lecId = null) {
+  e.preventDefault();
+  e.stopPropagation();
+  
+  const favs = getFavorites();
+  
+  if (type === "subject") {
+    const idx = favs.subjects.indexOf(subjectId);
+    if (idx > -1) favs.subjects.splice(idx, 1);
+    else favs.subjects.push(subjectId);
+  } else if (type === "item") {
+    const existingIdx = favs.items.findIndex(i => i.subjectId === subjectId && i.lecId === lecId);
+    if (existingIdx > -1) favs.items.splice(existingIdx, 1);
+    else favs.items.push({ subjectId, lecId });
+  }
+  
+  localStorage.setItem("so_favorites", JSON.stringify(favs));
+  
+  const btn = e.currentTarget;
+  if (btn.classList.contains("active")) {
+    btn.classList.remove("active");
+    btn.innerHTML = "☆";
+  } else {
+    btn.classList.add("active");
+    btn.innerHTML = "⭐";
+  }
+};
+
 // ===== SUBJECT CARDS (browse page) =====
 function renderSubjectCards() {
   const grid = document.getElementById("subjects-grid");
   if (!grid || typeof SUBJECTS === "undefined") return;
 
-  grid.innerHTML = SUBJECTS.map((s, i) => `
+  grid.innerHTML = SUBJECTS.map((s, i) => {
+    const isFav = isFavorite("subject", s.id);
+    return `
     <a href="subject.html?id=${s.id}" class="subject-card" style="animation-delay:${i * 0.07}s">
+      <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, 'subject', '${s.id}')" title="Toggle Favorite">${isFav ? '⭐' : '☆'}</button>
       <div class="sc-glow" style="background:linear-gradient(${s.grad})"></div>
       <div class="sc-icon" style="background:linear-gradient(${s.grad})">
         <span>${s.icon}</span>
@@ -82,7 +123,8 @@ function renderSubjectCards() {
       </div>
       <div class="sc-accent" style="background:linear-gradient(${s.grad})"></div>
     </a>
-  `).join("");
+  `;
+  }).join("");
 }
 
 // ===== HOME CARDS =====
@@ -252,6 +294,9 @@ function toggleChapter(btn, color) {
       const isCompleted = hasContent && (subjProg.pdfs.includes(lec.content) || subjProg.videos.includes(lec.content));
       const iconRight = isCompleted ? `<span class="lec-open" style="color:#10b981">✅</span>` : (hasContent ? `<span class="lec-open">▶</span>` : "");
 
+      const isFav = isFavorite("item", window._currentSubjectId, lec.id);
+      const favBtnHTML = `<button class="fav-btn item-fav ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, 'item', '${window._currentSubjectId}', '${lec.id}')" title="Toggle Favorite">${isFav ? '⭐' : '☆'}</button>`;
+      
       const btn2 = document.createElement("button");
       btn2.className = "lec-item";
       btn2.style.cssText = `--acc:${color}`;
@@ -264,7 +309,10 @@ function toggleChapter(btn, color) {
         <span class="lec-ico">${ico}</span>
         <span class="lec-ttl">${lec.title || "(no title)"}</span>
         <span class="lec-badge">${lbl}</span>
-        ${iconRight}
+        <div class="lec-actions">
+          ${hasContent ? favBtnHTML : ''}
+          ${iconRight}
+        </div>
       `;
 
       if (hasContent) {
@@ -525,6 +573,81 @@ function renderProgressSection() {
   }).join("");
 }
 
+// ===== FAVORITES PAGE =====
+function renderFavoritesPage() {
+  const container = document.getElementById("fav-container");
+  if (!container || typeof SUBJECTS === "undefined") return;
+
+  const favs = getFavorites();
+  
+  // Render Subjects
+  const subjGrid = document.getElementById("fav-subjects-grid");
+  if (subjGrid) {
+    if (favs.subjects.length === 0) {
+      subjGrid.innerHTML = `<div class="fav-empty"><span>📭</span><p>You haven't favorited any subjects yet.</p></div>`;
+    } else {
+      subjGrid.innerHTML = SUBJECTS.filter(s => favs.subjects.includes(s.id)).map((s, i) => `
+        <a href="subject.html?id=${s.id}" class="subject-card" style="animation-delay:${i * 0.05}s">
+          <button class="fav-btn active" onclick="toggleFavorite(event, 'subject', '${s.id}'); renderFavoritesPage();" title="Remove Favorite">⭐</button>
+          <div class="sc-glow" style="background:linear-gradient(${s.grad})"></div>
+          <div class="sc-icon" style="background:linear-gradient(${s.grad})">
+            <span>${s.icon}</span>
+          </div>
+          <div>
+            <div class="sc-tag">${s.nameAr}</div>
+            <div class="sc-name">${s.name}</div>
+          </div>
+          <div class="sc-accent" style="background:linear-gradient(${s.grad})"></div>
+        </a>
+      `).join("");
+    }
+  }
+
+  // Render Items (PDFs/Videos)
+  const itemsGrid = document.getElementById("fav-items-grid");
+  if (itemsGrid && typeof CONTENT !== "undefined") {
+    if (favs.items.length === 0) {
+      itemsGrid.innerHTML = `<div class="fav-empty"><span>📭</span><p>You haven't favorited any PDFs or videos yet.</p></div>`;
+    } else {
+      const typeMap = { lecture: ["📖", "Lecture"], video: ["🎬", "Video"], summary: ["🔑", "Summary"], file: ["📄", "PDF"] };
+      let itemsHTML = '';
+      
+      favs.items.forEach((favItem, i) => {
+        const sub = SUBJECTS.find(s => s.id === favItem.subjectId);
+        if(!sub) return;
+        
+        let foundLec = null;
+        Object.values(CONTENT[sub.id] || {}).forEach(sec => {
+          sec.forEach(ch => {
+            ch.forEach(lec => {
+              if(lec.id === favItem.lecId) foundLec = lec;
+            });
+          });
+        });
+        
+        if (foundLec) {
+          const [ico, lbl] = typeMap[foundLec.type] || ["📖", "Content"];
+          const escapedLec = JSON.stringify(foundLec).replace(/'/g, "&apos;").replace(/"/g, "&quot;");
+          itemsHTML += `
+            <div class="fav-item-card" style="animation-delay:${i * 0.05}s">
+              <button class="fav-btn active" onclick="toggleFavorite(event, 'item', '${sub.id}', '${foundLec.id}'); renderFavoritesPage();" title="Remove Favorite">⭐</button>
+              <div class="fic-header">
+                <span class="fic-subj" style="color:${sub.color}">${sub.name}</span>
+              </div>
+              <div class="fic-title">${foundLec.title || "(no title)"}</div>
+              <div class="fic-footer">
+                <span class="fic-badge">${ico} ${lbl}</span>
+                <button class="s-pill" onclick='openViewer(${escapedLec}, "${sub.id}")'>Open ↗</button>
+              </div>
+            </div>
+          `;
+        }
+      });
+      itemsGrid.innerHTML = itemsHTML;
+    }
+  }
+}
+
 // ===== CHECK PENDING ON LOAD =====
 function checkPendingProgress() {
   const pendingStr = localStorage.getItem("so_pending_progress");
@@ -660,4 +783,5 @@ document.addEventListener("DOMContentLoaded", () => {
   renderProgressSection();
   checkPendingProgress();
   initAiAssistant();
+  renderFavoritesPage();
 });
