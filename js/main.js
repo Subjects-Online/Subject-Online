@@ -6,7 +6,7 @@
 
 // ===== THEME & SETTINGS =====
 function getSettings() {
-  const defaults = { name: "", theme: "dark", favSubject: "", sortMode: "default" };
+  const defaults = { name: "", theme: "dark", favSubject: "", sortMode: "default", customOrder: [] };
   const saved = localStorage.getItem("so_settings");
   return saved ? { ...defaults, ...JSON.parse(saved) } : defaults;
 }
@@ -122,6 +122,15 @@ function renderSubjectCards() {
     sortedSubjects.sort((a, b) => a.name.localeCompare(b.name));
   } else if (settings.sortMode === "reverse") {
     sortedSubjects.reverse();
+  } else if (settings.sortMode === "custom" && settings.customOrder && settings.customOrder.length > 0) {
+    sortedSubjects.sort((a, b) => {
+      const idxA = settings.customOrder.indexOf(a.id);
+      const idxB = settings.customOrder.indexOf(b.id);
+      if (idxA === -1 && idxB === -1) return 0;
+      if (idxA === -1) return 1;
+      if (idxB === -1) return -1;
+      return idxA - idxB;
+    });
   }
   
   // If a favorite subject is set, bring it to front
@@ -648,15 +657,57 @@ function renderSettingsPage() {
     favSubjectSelect.innerHTML = `<option value="">None</option>` + 
       SUBJECTS.map(s => `<option value="${s.id}" ${settings.favSubject === s.id ? "selected" : ""}>${s.name}</option>`).join("");
   }
+
+  // Custom Order List
+  renderSubjectOrderList();
 }
+
+let _localCustomOrder = [];
+
+function renderSubjectOrderList() {
+  const listWrap = document.getElementById("set-custom-order-list");
+  if (!listWrap || typeof SUBJECTS === "undefined") return;
+
+  const settings = getSettings();
+  if (_localCustomOrder.length === 0) {
+    _localCustomOrder = settings.customOrder && settings.customOrder.length === SUBJECTS.length 
+      ? [...settings.customOrder] 
+      : SUBJECTS.map(s => s.id);
+  }
+
+  listWrap.innerHTML = _localCustomOrder.map((id, idx) => {
+    const sub = SUBJECTS.find(s => s.id === id);
+    if (!sub) return "";
+    return `
+      <div class="order-item" data-id="${id}">
+        <span class="order-drag">☰</span>
+        <span class="order-name">${sub.icon} ${sub.name}</span>
+        <div class="order-btns">
+          <button class="order-btn" onclick="moveSubjectOrder(${idx}, -1)" ${idx === 0 ? "disabled" : ""}>↑</button>
+          <button class="order-btn" onclick="moveSubjectOrder(${idx}, 1)" ${idx === _localCustomOrder.length - 1 ? "disabled" : ""}>↓</button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+window.moveSubjectOrder = function(idx, dir) {
+  const targetIdx = idx + dir;
+  if (targetIdx < 0 || targetIdx >= _localCustomOrder.length) return;
+  const temp = _localCustomOrder[idx];
+  _localCustomOrder[idx] = _localCustomOrder[targetIdx];
+  _localCustomOrder[targetIdx] = temp;
+  renderSubjectOrderList();
+};
 
 window.saveUserSettings = function() {
   const name = document.getElementById("set-name").value;
   const sortMode = document.getElementById("set-sort").value;
   const theme = document.getElementById("set-theme").value;
   const favSubject = document.getElementById("set-fav-sub").value;
+  const customOrder = [..._localCustomOrder];
   
-  updateSettings({ name, sortMode, theme, favSubject });
+  updateSettings({ name, sortMode, theme, favSubject, customOrder });
   
   // Apply theme immediately
   document.documentElement.setAttribute("data-theme", theme);

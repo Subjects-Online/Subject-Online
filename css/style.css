@@ -290,6 +290,16 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .save-settings-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(124, 58, 237, 0.2); filter: brightness(1.1); }
 .save-settings-btn.success { background: #10b981; }
 
+.custom-order-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 8px; }
+.order-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); transition: all var(--tr); }
+.order-drag { color: var(--faint); font-size: 18px; cursor: default; }
+.order-name { flex: 1; font-weight: 600; font-size: 14px; }
+.order-btns { display: flex; gap: 4px; }
+.order-btn { width: 32px; height: 32px; border-radius: 4px; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-weight: 700; cursor: pointer; transition: all var(--tr); display: flex; align-items: center; justify-content: center; }
+.order-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.order-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+
 .lec-num{width:26px;height:26px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--muted);flex-shrink:0}
 .lec-ico{font-size:18px;flex-shrink:0}
 .lec-ttl{flex:1;font-size:14px;font-weight:600;text-align:left;word-break:break-word;line-height:1.4}

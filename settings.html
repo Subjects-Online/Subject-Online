@@ -84,17 +84,38 @@
 
         <div class="set-group au d2" style="animation-delay: 0.4s">
           <label for="set-sort">Sort Subjects By</label>
-          <select id="set-sort" class="set-control">
+          <select id="set-sort" class="set-control" onchange="toggleCustomOrder(this.value)">
             <option value="default">Default Order</option>
             <option value="alphabetical">Alphabetical (A-Z)</option>
             <option value="reverse">Reverse Order</option>
+            <option value="custom">Custom Order (My Arrangement)</option>
           </select>
+        </div>
+
+        <div id="custom-order-sec" class="set-group au d2" style="display: none; animation-delay: 0.5s">
+          <label>Arrange Subjects</label>
+          <div class="custom-order-list" id="set-custom-order-list">
+            <!-- Dynamically filled -->
+          </div>
         </div>
 
         <button class="save-settings-btn au as" onclick="saveUserSettings()">Save Changes</button>
       </div>
     </div>
   </div>
+
+  <script>
+    function toggleCustomOrder(val) {
+      document.getElementById('custom-order-sec').style.display = (val === 'custom') ? 'block' : 'none';
+    }
+    // Set initial visibility on load
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const val = document.getElementById('set-sort').value;
+        toggleCustomOrder(val);
+      }, 100);
+    });
+  </script>
 
   <script src="data.js"></script>
   <script src="js/main.js"></script>
