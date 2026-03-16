@@ -716,6 +716,12 @@ const CONTENT = {
           type: "video",
           content: "./pdfs/statistics/Lect 4.mp4",
         },
+        {
+          id: "vid5",
+          title: "Lect 5 Dr.Magda",
+          type: "video",
+          content: "./pdfs/statistics/Lect 5 (Stat) (S.O V2).mp4",
+        },
       ],
       [], // Chapter 2
       [], // Chapter 3
