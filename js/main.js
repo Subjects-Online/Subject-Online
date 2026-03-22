@@ -1152,6 +1152,95 @@ function checkPendingProgress() {
   }
 }
 
+// ===== AI SITE CONTEXT =====
+function buildSiteContext() {
+  if (typeof SUBJECTS === "undefined" || typeof CONTENT === "undefined") return "";
+
+  let ctx = "=== محتوى موقع Subjects Online ===\n";
+  ctx += "الموقع ده بيخدم طلاب كلية التجارة. فيه المواد دي:\n\n";
+
+  SUBJECTS.forEach(sub => {
+    ctx += `📚 مادة: ${sub.name} (${sub.nameAr}) — ${sub.desc}\n`;
+    const subContent = CONTENT[sub.id] || {};
+
+    Object.entries(subContent).forEach(([sectionId, chapters]) => {
+      const sec = (typeof SECTIONS !== "undefined" ? SECTIONS : []).find(s => s.id === sectionId);
+      const secTitle = sec ? sec.title : sectionId;
+      const lectures = [];
+
+      chapters.forEach((ch, chIdx) => {
+        ch.forEach(lec => {
+          let lecLine = `  - ${lec.title} (${lec.type === "video" ? "فيديو" : "PDF"})`;
+          // Include interactive step content if available
+          if (lec.interactive && lec.interactive.length > 0) {
+            lecLine += "\n    محتوى تفاعلي:";
+            lec.interactive.forEach(step => {
+              lecLine += `\n      • ${step.title}: ${step.content}`;
+            });
+          }
+          lectures.push(lecLine);
+        });
+      });
+
+      if (lectures.length > 0) {
+        ctx += `  [${secTitle}]:\n${lectures.join("\n")}\n`;
+      }
+    });
+
+    // Special content
+    if (typeof SPECIAL_CONTENT !== "undefined" && SPECIAL_CONTENT[sub.id]) {
+      ctx += `  [Special/Premium]:\n`;
+      SPECIAL_CONTENT[sub.id].forEach(lec => {
+        ctx += `  - ${lec.title}\n`;
+      });
+    }
+
+    ctx += "\n";
+  });
+
+  ctx += "=== نهاية محتوى الموقع ===\n\n";
+
+  // إضافة بيانات الطالب (Memory & Stats)
+  ctx += "=== إحصائيات ونشاط الطالب الحالي ===\n";
+
+  try {
+    const progress = JSON.parse(localStorage.getItem("so_progress") || "{}");
+    const recents = JSON.parse(localStorage.getItem("so_recents") || "[]");
+    const favorites = JSON.parse(localStorage.getItem("so_favorites") || '{"subjects":[],"items":[]}');
+
+    let totalPdfs = 0, totalVids = 0;
+    Object.values(progress).forEach(p => {
+      if (p.pdfs) totalPdfs += p.pdfs.length;
+      if (p.videos) totalVids += p.videos.length;
+    });
+
+    ctx += `- أنجز الطالب حتى الآن: ${totalPdfs} ملفات PDF و ${totalVids} فيديوهات.\n`;
+
+    if (favorites.subjects.length > 0) {
+      const favNames = favorites.subjects.map(id => {
+        const s = SUBJECTS.find(sub => sub.id === id);
+        return s ? s.name : id;
+      }).join("، ");
+      ctx += `- المواد المفضلة للطالب: ${favNames}\n`;
+    }
+
+    if (recents.length > 0) {
+      ctx += `- أخر حاجات الطالب شافها أو ذاكرها (علشان تبقى عارف بيركز على إيه): \n`;
+      recents.forEach(r => {
+        const s = SUBJECTS.find(sub => sub.id === r.sid);
+        ctx += `  • ${r.name} (في مادة ${s ? s.name : r.sid})\n`;
+      });
+    } else {
+      ctx += `- الطالب لسه مبدأش يذاكر أو مفيش نشاط أخير متسجل.\n`;
+    }
+  } catch (e) {
+    ctx += "تعذر جلب إحصائيات الطالب.\n";
+  }
+
+  ctx += "=== نهاية نشاط الطالب ===\n";
+  return ctx;
+}
+
 // ===== AI ASSISTANT =====
 function initAiAssistant() {
   const body = document.body;
@@ -1177,10 +1266,10 @@ function initAiAssistant() {
       <button class="ai-close">✕</button>
     </div>
     <div class="ai-messages" id="ai-messages">
-      <div class="ai-msg ai-msg-bot">Hello! I'm Gemini, your AI tutor. Ask me to explain a topic, summarize notes, or help you study!</div>
+      <div class="ai-msg ai-msg-bot" dir="auto">أهلاً بيك! أنا الـ AI Tutor بتاعك، جاهز أساعدك في أي وقت. اسألني أي حاجة.</div>
     </div>
     <div class="ai-input-area">
-      <input type="text" class="ai-input" id="ai-input" placeholder="Ask anything..." autocomplete="off">
+      <input type="text" class="ai-input" id="ai-input" placeholder="اسألني أي حاجة..." autocomplete="off">
       <button class="ai-send" id="ai-send">↑</button>
     </div>
   `;
@@ -1198,6 +1287,7 @@ function initAiAssistant() {
   const appendMsg = (text, isUser) => {
     const d = document.createElement("div");
     d.className = "ai-msg " + (isUser ? "ai-msg-user" : "ai-msg-bot");
+    d.dir = "auto";
     d.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
     msgsContainer.appendChild(d);
     msgsContainer.scrollTop = msgsContainer.scrollHeight;
@@ -1224,23 +1314,56 @@ function initAiAssistant() {
 
     appendMsg(text, true);
 
-    // ⚠️ تحذير أمني: وضع الـ API Key في كود الـ JavaScript المفتوح (Frontend) بيخليه مكشوف لأي حد بيزور الموقع.
-    // لأي موقع حقيقي، لازم الـ Key يتخزن في Backend. لكن بما إن الموقع هنا Static، دي الطريقة الوحيدة المؤقتة.
-    const apiKey = "AIzaSyDFSCVw0Td3WEh4hpZZqweUufa9A1-S31g"; // حط الـ API Key بتاعك هنا مكان الكلمة دي
+    const apiKey = typeof GROQ_API_KEY !== 'undefined' ? GROQ_API_KEY : "YOUR_GROQ_API_KEY_HERE";
 
-    if (!apiKey || apiKey === "YOUR_API_KEY_HERE") {
-      appendMsg("عذراً، لم يتم إعداد مفتاح API من قبل مدير النظام بعد.", false);
+    if (!apiKey || apiKey === "YOUR_GROQ_API_KEY_HERE") {
+      appendMsg("عذراً، لم يتم إعداد مفتاح API بعد.", false);
       return;
     }
 
     showTyping();
 
     try {
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+      const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${apiKey}`
+        },
         body: JSON.stringify({
-          contents: [{ parts: [{ text: "You are an expert tutor for university students. Be helpful, concise, and friendly. Explain clearly but keep it short. Don't use heavy markdown except for bold and lists. The student says: " + text }] }]
+          model: "llama-3.3-70b-versatile",
+          messages: [
+            {
+              role: "system",
+              content: (() => {
+                const studentName = (typeof getSettings === 'function' ? getSettings().name : '') || '';
+                const nameNote = studentName ? `اسم الطالب اللي بتكلمه هو "${studentName}"، ناديه باسمه دايماً.` : '';
+                return `أنت مساعد ذكي ومدرس لطلاب الجامعة اسمك "AI Tutor".
+أهم قاعدة: اتكلم بالعامية المصرية الصميمة (زي ما المصريين بيتكلموا). ممنوع منعاً باتاً كتابة أي حروف صينية، أو لغات غريبة، أو كلام مش مفهوم. لو مش عارف حاجة قول "مش عارف" ببساطة. خليك طبيعي جداً وودود. ${nameNote}
+
+لو حد طلب منك شرح، اكتب شرح مفصل وطويل وواضح، واضرب أمثلة من الحياة اليومية. الطالب محتاج يفهم مش بس يقرأ.
+
+دي معلومات محتوى الموقع ونشاط وإحصائيات الطالب عشان تبقى فاهمه وعارف هو بيذاكر إيه مؤخراً (دي الـ Memory بتاعتك عنه):
+${buildSiteContext()}
+
+لو الطالب سأل عن حاجة تخص تقدمه أو المحاضرات اللي شافها، ناقشه فيها وشجعه بناءً على بياناته. لو سأل عن محاضرة، اشرحها بالتفصيل.
+
+لو الطالب طلب منك تفتحله صفحة معينة في الموقع، اديله الرد المناسب وضيف في آخر ردك الكود ده بالضبط (بين قوسين مربعين):
+- لفتح الإعدادات: [ACTION: OPEN_SETTINGS]
+- لفتح المفضلة: [ACTION: OPEN_FAVORITES]
+- لفتح صفحة مادة معينة (مثلاً مادة المحاسبة اللي الأي دي بتاعها accounting): [ACTION: OPEN_SUBJECT_accounting]
+- لفتح المطور الذاتي: [ACTION: OPEN_SELF_DEV]
+- لفتح الدارك مود أو اللايت مود: [ACTION: TOGGLE_THEME]
+متكتبش الأكواد دي غير لو هو طلب منك تفتح حاجة.`;
+              })()
+            },
+            {
+              role: "user",
+              content: text
+            }
+          ],
+          max_tokens: 4096,
+          temperature: 0.3
         })
       });
 
@@ -1249,8 +1372,20 @@ function initAiAssistant() {
 
       if (data.error) {
         appendMsg("API Error: " + data.error.message, false);
-      } else if (data.candidates && data.candidates[0]) {
-        appendMsg(data.candidates[0].content.parts[0].text, false);
+      } else if (data.choices && data.choices[0]) {
+        let aiText = data.choices[0].message.content;
+
+        // Handle Actions
+        const actionRegex = /\[ACTION:\s*([^\]]+)\]/g;
+        let match;
+        while ((match = actionRegex.exec(aiText)) !== null) {
+          const action = match[1].trim();
+          setTimeout(() => executeAiAction(action), 1500); // execute after a small delay
+        }
+
+        // Remove the action tags from the visible message
+        aiText = aiText.replace(actionRegex, "").trim();
+        if (aiText) appendMsg(aiText, false);
       } else {
         appendMsg("I'm sorry, I couldn't generate a response.", false);
       }
@@ -1264,6 +1399,22 @@ function initAiAssistant() {
   inputEl.addEventListener("keypress", (e) => {
     if (e.key === "Enter") handleSend();
   });
+}
+
+// ===== AI ACTIONS EXECUTOR =====
+function executeAiAction(action) {
+  if (action === "OPEN_SETTINGS") {
+    window.location.href = "settings.html";
+  } else if (action === "OPEN_FAVORITES") {
+    window.location.href = "favorites.html";
+  } else if (action === "OPEN_SELF_DEV") {
+    window.location.href = "personal-dev.html";
+  } else if (action === "TOGGLE_THEME") {
+    toggleTheme();
+  } else if (action.startsWith("OPEN_SUBJECT_")) {
+    const subjectId = action.replace("OPEN_SUBJECT_", "");
+    window.location.href = `subject.html?id=${subjectId}`;
+  }
 }
 
 // ===== GLOBAL SEARCH =====
