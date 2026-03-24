@@ -6,7 +6,7 @@
 
 // ===== THEME & SETTINGS =====
 function getSettings() {
-  const defaults = { name: "", theme: "dark", festive: "off", favSubjects: [], sortMode: "default", customOrder: [], accentColor: "#7c3aed" };
+  const defaults = { name: "", avatar: "", theme: "dark", festive: "off", favSubjects: [], sortMode: "default", customOrder: [], accentColor: "#7c3aed" };
   const saved = localStorage.getItem("so_settings");
   const res = saved ? { ...defaults, ...JSON.parse(saved) } : defaults;
   // Migrate old favSubject if exists
@@ -88,7 +88,149 @@ function updateThemeBtn(theme) {
   });
 }
 
-// ===== NAVBAR =====
+// ===== NAVBAR & PROFILE =====
+function renderNavProfile() {
+  const navRight = document.querySelector(".nav-right");
+  if (!navRight) return;
+
+  const settings = getSettings();
+  if (!settings.name) return;
+
+  // Remove existing if any
+  const existing = document.querySelector(".nav-profile");
+  if (existing) existing.remove();
+
+  const profile = document.createElement("a");
+  profile.href = "settings.html";
+  profile.className = "nav-profile au";
+
+  const isEmoji = !settings.avatar || settings.avatar.length <= 2;
+  const avatarContent = isEmoji ? `<span>${settings.avatar || "👤"}</span>` : `<img src="${settings.avatar}" alt="Avatar">`;
+
+  profile.innerHTML = `
+    <div class="nav-avatar">${avatarContent}</div>
+    <span class="nav-user-name">${settings.name}</span>
+  `;
+
+  navRight.insertBefore(profile, navRight.firstChild);
+
+  // Update Mobile Menu
+  const mobileMenuInner = document.querySelector(".mobile-menu-inner");
+  if (mobileMenuInner) {
+    const existingMob = document.querySelector(".mobile-profile");
+    if (existingMob) existingMob.remove();
+
+    const mobProfile = document.createElement("div");
+    mobProfile.className = "mobile-profile";
+    mobProfile.innerHTML = `
+      <div class="mobile-avatar">${avatarContent}</div>
+      <div class="mobile-profile-info">
+        <h3>${settings.name}</h3>
+        <p>Student @ Subjects Online</p>
+      </div>
+    `;
+    mobileMenuInner.insertBefore(mobProfile, mobileMenuInner.firstChild);
+  }
+}
+
+// ===== LOGIN MODAL =====
+function showLoginModal() {
+  if (document.getElementById("login-modal-overlay")) return;
+
+  const overlay = document.createElement("div");
+  overlay.id = "login-modal-overlay";
+  overlay.className = "login-modal-overlay";
+
+  const avatars = ["👨‍🎓", "👩‍🎓", "🧠", "📚", "🚀", "✨", "🔥", "💎", "🎯", "🌟"];
+
+  overlay.innerHTML = `
+    <div class="login-modal glass">
+      <span class="pd-icon">👋</span>
+      <h2>Welcome!</h2>
+      <p>Enter your name to personalize your study experience.</p>
+      
+      <div class="login-input-wrap">
+        <label for="login-name">Your Name</label>
+        <input type="text" id="login-name" class="login-input" placeholder="Enter your name" maxlength="20">
+      </div>
+
+      <span class="avatar-selector-label">Choose your avatar</span>
+      <div class="avatar-grid" id="login-avatar-grid">
+        ${avatars.map((a, i) => `
+          <div class="avatar-option ${i === 0 ? "selected" : ""}" data-avatar="${a}">${a}</div>
+        `).join("")}
+        <div class="custom-avatar-btn" onclick="document.getElementById('login-avatar-upload').click()">
+          <span>📁 Upload Photo</span>
+          <input type="file" id="login-avatar-upload" hidden accept="image/*">
+        </div>
+      </div>
+
+      <button class="btn btn-primary" style="width: 100%" onclick="handleLoginSubmit()">Start Learning 🚀</button>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+  setTimeout(() => overlay.classList.add("open"), 10);
+
+  // Avatar Selection Logic
+  const options = overlay.querySelectorAll(".avatar-option");
+  options.forEach(opt => {
+    opt.addEventListener("click", () => {
+      options.forEach(o => o.classList.remove("selected"));
+      opt.classList.add("selected");
+    });
+  });
+
+  // Upload Logic
+  const uploader = document.getElementById("login-avatar-upload");
+  uploader.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (re) => {
+        const base64 = re.target.result;
+        let preview = overlay.querySelector(".avatar-option.custom-preview");
+        if (!preview) {
+          preview = document.createElement("div");
+          preview.className = "avatar-option custom-preview selected";
+          const grid = document.getElementById("login-avatar-grid");
+          grid.insertBefore(preview, grid.querySelector(".custom-avatar-btn"));
+        }
+        options.forEach(o => o.classList.remove("selected"));
+        preview.classList.add("selected");
+        preview.dataset.avatar = base64;
+        preview.innerHTML = `<img src="${base64}" alt="custom">`;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+}
+
+window.handleLoginSubmit = function () {
+  const nameInput = document.getElementById("login-name");
+  const name = nameInput.value.trim();
+  if (!name) {
+    nameInput.style.borderColor = "#ef4444";
+    nameInput.placeholder = "Please enter your name!";
+    return;
+  }
+
+  const selectedNode = document.querySelector(".avatar-option.selected");
+  const selectedAvatar = selectedNode ? selectedNode.dataset.avatar : "👨‍🎓";
+
+  updateSettings({ name, avatar: selectedAvatar });
+
+  const overlay = document.getElementById("login-modal-overlay");
+  overlay.classList.remove("open");
+  setTimeout(() => {
+    overlay.remove();
+    renderNavProfile();
+    renderGreeting();
+    if (typeof renderDashboard === 'function') renderDashboard();
+    if (typeof renderSettingsPage === 'function') renderSettingsPage();
+  }, 400);
+};
+
 function initNavbar() {
   const hamburger = document.querySelector(".hamburger");
   const mobileMenu = document.querySelector(".mobile-menu");
@@ -100,6 +242,7 @@ function initNavbar() {
     const isOpen = hamburger.classList.toggle("open");
     mobileMenu.classList.toggle("open", isOpen);
     backdrop.classList.toggle("open", isOpen);
+    if (isOpen) renderNavProfile(); // Refresh in mobile menu
   });
 
   backdrop.addEventListener("click", closeMenu);
@@ -938,12 +1081,20 @@ function renderGreeting() {
       `;
     }
 
+    const isEmoji = !settings.avatar || settings.avatar.length <= 2;
+    const avatarHtml = isEmoji
+      ? `<span>${settings.avatar || "👨‍🎓"}</span>`
+      : `<img src="${settings.avatar}" alt="Avatar">`;
+
     container.innerHTML = `
-      <div class="greeting-wrap au d1">
-        <h2>Hello, <span class="g-text">${settings.name}</span>! 👋</h2>
-        <p>اهلا بيك كل سنة وانت طيب عيد سعيد عليك كحكك وبسكوتك يباشا وشايك والعيال كبرت بقا وكدا ها </p>
-        ${bubblesHtml}
+      <div class="greeting-wrap au d1" style="display:flex; align-items:center; gap:20px; text-align:left;">
+        <div class="mobile-avatar" style="width:80px; height:80px; flex-shrink:0; font-size:40px; border-width:4px;">${avatarHtml}</div>
+        <div>
+          <h2 style="margin:0;">Hello, <span class="g-text">${settings.name}</span>! 👋</h2>
+          <p style="margin:5px 0 0;">اهلا بيك كل سنة وانت طيب عيد سعيد عليك كحكك وبسكوتك يباشا وشايك والعيال كبرت بقا وكدا ها </p>
+        </div>
       </div>
+      ${bubblesHtml}
     `;
   } else {
     if (heroEye) heroEye.style.display = "";
@@ -960,6 +1111,55 @@ function renderSettingsPage() {
   if (!container || typeof SUBJECTS === "undefined") return;
 
   const settings = getSettings();
+
+  const avatarGrid = document.getElementById("set-avatar-grid");
+  if (avatarGrid) {
+    const avatars = ["👨‍🎓", "👩‍🎓", "🧠", "📚", "🚀", "✨", "🔥", "💎", "🎯", "🌟"];
+    const currentAvatar = settings.avatar || "👨‍🎓";
+    const isCustom = currentAvatar.length > 2;
+
+    avatarGrid.querySelectorAll(".avatar-option").forEach(o => o.remove());
+
+    const html = avatars.map(a => `
+      <div class="avatar-option ${a === currentAvatar && !isCustom ? "selected" : ""}" data-avatar="${a}" onclick="selectSettingAvatar(this)">${a}</div>
+    `).join("");
+
+    const btn = avatarGrid.querySelector(".custom-avatar-btn");
+    btn.insertAdjacentHTML("beforebegin", html);
+
+    if (isCustom) {
+      btn.insertAdjacentHTML("beforebegin", `
+        <div class="avatar-option selected" data-avatar="${currentAvatar}" onclick="selectSettingAvatar(this)">
+          <img src="${currentAvatar}" alt="custom">
+        </div>
+      `);
+    }
+
+    const uploader = document.getElementById("set-avatar-upload");
+    if (uploader) {
+      uploader.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (re) => {
+            const base64 = re.target.result;
+            let preview = avatarGrid.querySelector(".avatar-option img")?.parentNode;
+            if (!preview) {
+              preview = document.createElement("div");
+              preview.className = "avatar-option selected";
+              preview.onclick = () => selectSettingAvatar(preview);
+              avatarGrid.insertBefore(preview, btn);
+            }
+            avatarGrid.querySelectorAll(".avatar-option").forEach(o => o.classList.remove("selected"));
+            preview.classList.add("selected");
+            preview.dataset.avatar = base64;
+            preview.innerHTML = `<img src="${base64}" alt="custom">`;
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+    }
+  }
 
   // Fill inputs
   const nameInput = document.getElementById("set-name");
@@ -990,6 +1190,12 @@ function renderSettingsPage() {
   // Custom Order List
   renderSubjectOrderList();
 }
+
+window.selectSettingAvatar = function (el) {
+  const grid = document.getElementById("set-avatar-grid");
+  grid.querySelectorAll(".avatar-option").forEach(o => o.classList.remove("selected"));
+  el.classList.add("selected");
+};
 
 let _localCustomOrder = [];
 
@@ -1031,6 +1237,7 @@ window.moveSubjectOrder = function (idx, dir) {
 
 window.saveUserSettings = function () {
   const name = document.getElementById("set-name").value;
+  const avatar = document.querySelector("#set-avatar-grid .avatar-option.selected")?.dataset.avatar || "👨‍🎓";
   const sortMode = document.getElementById("set-sort").value;
   const theme = document.getElementById("set-theme").value;
   const festive = document.getElementById("set-festive").value;
@@ -1041,7 +1248,10 @@ window.saveUserSettings = function () {
 
   const customOrder = [..._localCustomOrder];
 
-  updateSettings({ name, sortMode, theme, festive, favSubjects, customOrder, accentColor });
+  updateSettings({ name, avatar, sortMode, theme, festive, favSubjects, customOrder, accentColor });
+
+  renderNavProfile();
+  renderGreeting();
 
   // Apply changes immediately
   document.documentElement.setAttribute("data-theme", theme);
@@ -1548,6 +1758,7 @@ function renderSearchResults(results) {
 
 // ===== INIT =====
 document.addEventListener("DOMContentLoaded", () => {
+  const settings = getSettings();
   initTheme();
   initNavbar();
   renderHomeCards();
@@ -1562,6 +1773,11 @@ document.addEventListener("DOMContentLoaded", () => {
   renderRecents();
   renderDashboard();
   renderSettingsPage();
+  renderSpecialPage();
+
+  if (!settings.name) {
+    setTimeout(showLoginModal, 1000);
+  }
 });
 
 

@@ -4147,3 +4147,241 @@ body {
     transform: scale(1);
   }
 }
+
+/* ===== LOGIN MODAL ===== */
+.login-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+}
+
+.login-modal-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.login-modal {
+  width: 90%;
+  max-width: 440px;
+  padding: 40px;
+  text-align: center;
+  transform: translateY(20px);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.login-modal-overlay.open .login-modal {
+  transform: translateY(0);
+}
+
+.login-modal h2 {
+  font-size: 28px;
+  margin: 16px 0 8px;
+}
+
+.login-modal p {
+  color: var(--muted);
+  margin-bottom: 30px;
+}
+
+.login-input-wrap {
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.login-input-wrap label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: var(--muted);
+}
+
+.login-input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.login-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 15px var(--glow);
+  background: var(--surface-h);
+}
+
+.avatar-selector-label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: var(--muted);
+  text-align: left;
+}
+
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.avatar-option {
+  aspect-ratio: 1;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.avatar-option:hover {
+  border-color: var(--border-h);
+  background: var(--surface-h);
+  transform: scale(1.1);
+}
+
+.avatar-option.selected {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 15px var(--glow);
+}
+
+.avatar-option img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.custom-avatar-btn {
+  grid-column: span 5;
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 13px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.custom-avatar-btn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+/* ===== NAV PROFILE ===== */
+.nav-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px 6px 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  text-decoration: none;
+  color: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.nav-profile:hover {
+  background: var(--surface-h);
+  border-color: var(--border-h);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.nav-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  overflow: hidden;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nav-user-name {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .nav-user-name {
+    display: none;
+  }
+}
+
+/* MOBILE MENU PROFILE */
+.mobile-profile {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: var(--surface);
+  border-radius: 20px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+
+.mobile-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  overflow: hidden;
+  border: 3px solid #fff;
+}
+
+.mobile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mobile-profile-info h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.mobile-profile-info p {
+  font-size: 12px;
+  color: var(--muted);
+}
