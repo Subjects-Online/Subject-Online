@@ -1358,7 +1358,7 @@ function initAiAssistant() {
           "Authorization": `Bearer ${apiKey}`
         },
         body: JSON.stringify({
-          model: "Mistral-7B",
+          model: "llama-3.3-70b-instruct",
           messages: [
             {
               role: "system",
