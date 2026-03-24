@@ -1116,7 +1116,7 @@ function renderSettingsPage() {
   if (avatarGrid) {
     const avatars = ["👨‍🎓", "👩‍🎓", "🧠", "📚", "🚀", "✨", "🔥", "💎", "🎯", "🌟"];
     const currentAvatar = settings.avatar || "👨‍🎓";
-    const isCustom = currentAvatar.length > 20;
+    const isCustom = currentAvatar.length > 2;
 
     avatarGrid.querySelectorAll(".avatar-option").forEach(o => o.remove());
 
