@@ -1549,9 +1549,18 @@ body {
   padding-bottom: 80px;
 }
 
-.browse-header {
+.browse-header, .fav-header, .pd-header, .news-header, .spec-header, .dn-header {
   text-align: center;
   margin-bottom: 60px;
+  background: var(--card);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  padding: 60px 32px;
+  border-radius: 36px;
+  border: 1px solid var(--border);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
 }
 
 .browse-header h1 {
