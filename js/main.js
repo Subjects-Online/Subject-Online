@@ -419,12 +419,12 @@ function renderSectionContent(subjectId) {
     <div class="ch-item" style="animation-delay:${idx * 0.08}s" data-chid="${ch.id}">
       <button class="ch-btn" onclick="toggleChapter(this, '${sec.color}')">
         <div class="ch-left">
-          <span class="ch-num">${idx + 1}</span>
+          <div class="ch-checkbox"><span class="ch-num" style="display:none">${idx + 1}</span></div>
           <span class="ch-title">${ch.title}</span>
         </div>
         <div class="ch-right">
           <span class="ch-count">${ch.lectures.length > 0 ? ch.lectures.length + " item" + (ch.lectures.length > 1 ? "s" : "") : "Empty"}</span>
-          <span class="ch-chev">▾</span>
+          <span class="ch-chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
         </div>
       </button>
     </div>
@@ -442,9 +442,21 @@ function toggleChapter(btn, color) {
   const num = btn.querySelector(".ch-num");
 
   chev.style.transform = isOpen ? "rotate(180deg)" : "rotate(0)";
-  btn.style.borderColor = isOpen ? color : "transparent";
-  btn.style.color = isOpen ? color : "";
-  num.style.background = isOpen ? color : "";
+  item.style.borderColor = isOpen ? color : "var(--border)";
+  btn.style.color = isOpen ? color : "var(--text)";
+  
+  const checkbox = btn.querySelector(".ch-checkbox");
+  const numSpan = btn.querySelector(".ch-num");
+  if (isOpen) {
+    checkbox.style.background = color;
+    checkbox.style.borderColor = color;
+    numSpan.style.display = "block";
+    numSpan.style.color = "#fff";
+  } else {
+    checkbox.style.background = "transparent";
+    checkbox.style.borderColor = "var(--border)";
+    numSpan.style.display = "none";
+  }
 
   // Remove existing body
   const existing = item.querySelector(".ch-body");
@@ -494,11 +506,13 @@ function toggleChapter(btn, color) {
       btn2.dataset.lec = i;
       btn2.dataset.id = lec.id;
       btn2.innerHTML = `
-        <span class="lec-num">${i + 1}</span>
-        <span class="lec-ico">${ico}</span>
-        <span class="lec-ttl">${lec.title || "(no title)"}</span>
-        <span class="lec-badge">${lbl}</span>
+        <div class="lec-left">
+          <span class="lec-num">${i + 1}</span>
+          <span class="lec-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></span>
+          <span class="lec-ttl">${lec.title || "(no title)"}</span>
+        </div>
         <div class="lec-actions">
+          <span class="lec-badge">${lbl}</span>
           ${hasContent ? favBtnHTML : ''}
           ${resetBtnHTML}
           ${iconRight}
