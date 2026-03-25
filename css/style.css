@@ -722,13 +722,14 @@ body {
   gap: 8px;
   color: var(--muted);
   text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  transition: color var(--tr);
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .back-link:hover {
-  color: var(--accent);
+  color: var(--text);
+  transform: translateX(-4px);
 }
 
 /* ===== EMPTY STATE ===== */
@@ -1594,32 +1595,52 @@ body {
 .subj-header {
   display: flex;
   align-items: center;
-  gap: 28px;
-  margin-bottom: 48px;
+  gap: 32px;
+  margin-bottom: 60px;
   flex-wrap: wrap;
 }
 
 .subj-icon {
-  width: 80px;
-  height: 80px;
-  border-radius: 20px;
+  width: 96px;
+  height: 96px;
+  border-radius: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
+  font-size: 48px;
   flex-shrink: 0;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+}
+
+.subj-info .badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 99px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
 .subj-info h1 {
-  font-size: clamp(28px, 5vw, 44px);
+  font-size: clamp(36px, 5vw, 56px);
   font-weight: 900;
-  letter-spacing: -1px;
-  margin-bottom: 8px;
+  letter-spacing: -1.5px;
+  margin-bottom: 12px;
+  margin-top: 4px;
+  color: var(--text);
 }
 
 .subj-info p {
   color: var(--muted);
   font-size: 16px;
+  font-weight: 500;
+  max-width: 600px;
+  line-height: 1.6;
 }
 
 .subj-layout {
