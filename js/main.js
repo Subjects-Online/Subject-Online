@@ -1049,7 +1049,7 @@ function renderGreeting() {
 
     container.innerHTML = `
       <div class="greeting-banner au d1">
-        <div class="mobile-avatar" style="width:140px; height:140px; font-size:65px; border-width:6px; box-shadow: 0 10px 25px var(--glow);">${avatarHtml}</div>
+        <div class="mobile-avatar" style="width:140px; height:140px; font-size:65px; background: transparent;">${avatarHtml}</div>
         <div class="greeting-content">
           <h2 class="greet-title">${greetText}, <span class="g-text">${settings.name}</span>!</h2>
           <div class="greet-meta" style="display:flex; justify-content:center; gap:24px; flex-wrap:wrap; margin-top:12px;">
@@ -1211,7 +1211,6 @@ window.saveUserSettings = function () {
   const lang = document.getElementById("set-lang")?.value || getSettings().lang || "en";
   const sortMode = document.getElementById("set-sort").value;
   const theme = document.getElementById("set-theme").value;
-  const festive = document.getElementById("set-festive").value;
   const accentColor = document.getElementById("set-color").value;
 
   const favSubjects = [];
@@ -1220,7 +1219,7 @@ window.saveUserSettings = function () {
   const customOrder = [..._localCustomOrder];
   const phone = document.getElementById("set-phone").value;
 
-  updateSettings({ name, avatar, lang, sortMode, theme, festive, favSubjects, customOrder, accentColor, phone });
+  updateSettings({ name, avatar, lang, sortMode, theme, favSubjects, customOrder, accentColor, phone });
 
   renderNavProfile();
   renderGreeting();
@@ -1228,14 +1227,9 @@ window.saveUserSettings = function () {
 
   // Apply changes immediately
   document.documentElement.setAttribute("data-theme", theme);
-  if (festive !== "off") {
-    document.documentElement.setAttribute("data-festive", festive);
-  } else {
-    document.documentElement.removeAttribute("data-festive");
-  }
+  document.documentElement.removeAttribute("data-festive");
   applyAccentColor(accentColor);
   updateThemeBtn(theme);
-  applyFestiveIcons();
 
   const saveBtn = document.querySelector(".save-settings-btn");
   if (saveBtn) {
