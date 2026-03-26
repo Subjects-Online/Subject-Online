@@ -279,6 +279,29 @@ body {
   transform: translateX(-4px);
 }
 
+.back-link-path {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 20px 8px 28px;
+  background: rgba(255, 255, 255, 0.308);
+  color: black !important;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  /* clip-path: polygon(15px 0%, 100% 0%, 100% 100%, 15px 100%, 0% 50%); */
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 24px;
+  border-radius: 4px;
+  /* Slight radius for the non-clipped parts if any */
+  box-shadow: 0 4px 15px var(--glow);
+}
+
+.back-link-path:hover {
+  transform: translateX(-5px);
+  /* filter: brightness(1.15); */
+  /* box-shadow: 0 8px 25px var(--glow); */
+}
+
 /* ===== EMPTY STATE ===== */
 .empty-state {
   text-align: center;
@@ -1358,7 +1381,7 @@ body {
 }
 
 .dash-grid {
-  display: grid;
+  display: block;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
 }
