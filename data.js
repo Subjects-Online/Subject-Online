@@ -263,6 +263,20 @@ const CONTENT = {
       [], // Chapter 3
       [], // Chapter 4
     ],
+    quizzes: [
+      // Chapter 1
+      [
+        {
+          id: "lec1",
+          title: "Quiz 1",
+          type: "file",
+          content: "./pdfs/accounting/Quiz 1 Accounting.pdf",
+        },
+      ],
+      [], // Chapter 2
+      [], // Chapter 3
+      [], // Chapter 4
+    ],
   },
 
   // ============================
@@ -396,6 +410,25 @@ const CONTENT = {
       [], // Chapter 2
       [], // Chapter 3
     ],
+    quizzes: [
+      // Chapter 1
+      [
+        {
+          id: "lec1",
+          title: "Quiz 1",
+          type: "file",
+          content: "./pdfs/economics/Eco Quiz1.pdf",
+        },
+        {
+          id: "lec1",
+          title: "Quiz 2",
+          type: "file",
+          content: "./pdfs/economics/Eco Quiz2.pdf",
+        },
+      ],
+      [], // Chapter 2
+      [], // Chapter 3
+    ],
   },
   //-------------------------------------------------------------
   english: {
@@ -482,6 +515,20 @@ const CONTENT = {
       [], // Chapter 3
       [], // Chapter 4
     ],
+    quizzes: [
+      // Chapter 1
+      [
+        {
+          id: "lec1",
+          title: "Quiz 1",
+          type: "file",
+          content: "./pdfs/english/business English Quiz 1.pdf",
+        },
+      ],
+      [], // Chapter 2
+      [], // Chapter 3
+      [], // Chapter 4
+    ],
   },
   //-------------------------------------------------------------
   "political-science": {
@@ -519,7 +566,7 @@ const CONTENT = {
           content: "./pdfs/political-science/Quiz 1 Political Science.pdf",
         },
         {
-          id: "pol1",
+          id: "pol2",
           title: "Quiz 1 Dr.Ashraf حل بالتفصيل",
           type: "file",
           content: "./pdfs/political-science/Quiz 1 (Political) (S.O).pdf",
@@ -795,9 +842,15 @@ const CONTENT = {
       [
         {
           id: "lec1",
-          title: "Quiz 1 Dr.Magda",
+          title: "Quiz 1 ",
           type: "file",
           content: "./pdfs/statistics/Quiz 1 (stat) (S.O V2).pdf",
+        },
+        {
+          id: "lec2",
+          title: "Quiz 2 ",
+          type: "file",
+          content: "./pdfs/statistics/Inferential_Statistics Quiz 2.pdf",
         },
       ],
     ],
@@ -918,6 +971,24 @@ const CONTENT = {
           type: "file",
           content: "./pdfs/ais/Lect 3 Sum..pdf",
         },
+      ],
+
+      [], // Chapter 2
+
+      [], // Chapter 3
+
+      [], // Chapter 4
+    ],
+    quizzes: [
+      // Chapter 1
+      [
+        {
+          id: "lec1",
+          title: "Quiz 1 ",
+          type: "file",
+          content: "/pdfs/ais/AIS Quiz 1.pdf",
+        },
+        
       ],
 
       [], // Chapter 2
@@ -1051,37 +1122,36 @@ const CONTENT = {
   },
 };
 
-
- // statistics: {
-  //   "course-content": [
-  //     [
-  //       {
-  //         id: "stat1",
-  //         title: "Probability Distribution",
-  //         type: "file",
-  //         content: "./pdfs/statistics/Prob_Dist.pdf",
-  //         interactive: [
-  //           {
-  //             title: "Random Variables",
-  //             content:
-  //               "A random variable is a numerical description of the outcome of an experiment.",
-  //           },
-  //           {
-  //             title: "Discrete vs Continuous",
-  //             content:
-  //               "Discrete variables have countable outcomes, while continuous variables can take any value in an interval.",
-  //           },
-  //           {
-  //             title: "Expected Value",
-  //             content:
-  //               "The mean or expected value of a random variable is the weighted average of all possible values.",
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   ],
-  // },
-  //----------------------------------------------
+// statistics: {
+//   "course-content": [
+//     [
+//       {
+//         id: "stat1",
+//         title: "Probability Distribution",
+//         type: "file",
+//         content: "./pdfs/statistics/Prob_Dist.pdf",
+//         interactive: [
+//           {
+//             title: "Random Variables",
+//             content:
+//               "A random variable is a numerical description of the outcome of an experiment.",
+//           },
+//           {
+//             title: "Discrete vs Continuous",
+//             content:
+//               "Discrete variables have countable outcomes, while continuous variables can take any value in an interval.",
+//           },
+//           {
+//             title: "Expected Value",
+//             content:
+//               "The mean or expected value of a random variable is the weighted average of all possible values.",
+//           },
+//         ],
+//       },
+//     ],
+//   ],
+// },
+//----------------------------------------------
 const SPECIAL_CONTENT = {
   accounting: [
     // {
