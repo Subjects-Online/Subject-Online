@@ -247,11 +247,12 @@ const CONTENT = {
           content: "./pdfs/accounting/Lect 5 (Accounting) (S.O).mp4",
         },
         {
-          id: "vid3",
+          id: "vid4",
           title: "Lect 6 Dr.MZ",
           type: "video",
           content: "./pdfs/accounting/Lect 6 (Accounting) (S.O).mp4",
         },
+        
       ], // Chapter 2
       [], // Chapter 3
       [], // Chapter 4
