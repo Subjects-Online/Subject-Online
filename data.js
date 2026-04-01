@@ -575,6 +575,14 @@ const CONTENT = {
           content: "./pdfs/political-science/Lect 5 (Political) (S.O).pdf",
         },
       ],
+      [
+        {
+          id: "pol6",
+          title: "Lect 6 Dr.Ashraf",
+          type: "file",
+          content: "./pdfs/political-science/Lect 6 (Political) (S.O V2).pdf",
+        },
+      ],
     ],
     quizzes: [
       [
