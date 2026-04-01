@@ -623,6 +623,14 @@ const CONTENT = {
           content: "./pdfs/political-science/Lect 5 (Public) (S.O).mp4",
         },
       ],
+      [
+        {
+          id: "vid6",
+          title: "Lect 6 Dr.Ashraf ",
+          type: "video",
+          content: "./pdfs/political-science/Lect 6 (Political) (S.O V2).mp4",
+        },
+      ],
     ],
     qa: [
       [
