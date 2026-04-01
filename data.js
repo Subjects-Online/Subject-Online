@@ -200,8 +200,15 @@ const CONTENT = {
           type: "file",
           content: "./pdfs/accounting/Lect4 (Acc.) (S.O).pdf",
         },
+        {
+          id: "lec5",
+          title: "Lect 5 Dr.MZ",
+          type: "file",
+          content: "./pdfs/accounting/Lect 5 (Acc.) (S.O V2).pdf",
+        },
       ], // Chapter 2
       [], // Chapter 3
+
       [], // Chapter 4
     ],
     videos: [
