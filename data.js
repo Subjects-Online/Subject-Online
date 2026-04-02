@@ -302,7 +302,7 @@ const CONTENT = {
       [
         {
           id: "lec1",
-          title: "Summary 1",
+          title: "Summary of lect 1",
           type: "file",
           content: "./pdfs/accounting/Sum Of Lect 1 (Acc.) (S.O V2).pdf",
         },
