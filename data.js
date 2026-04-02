@@ -259,7 +259,14 @@ const CONTENT = {
           content: "./pdfs/accounting/Lect 6 (Accounting) (S.O).mp4",
         },
       ], // Chapter 2
-      [], // Chapter 3
+      [
+        {
+          id: "vid7",
+          title: "Lect 7 Dr.MZ",
+          type: "video",
+          content: "./pdfs/accounting/Lect 7 (Acc.) (S.O V2).mp4",
+        },
+      ], // Chapter 3
       [], // Chapter 4
     ],
     sections: [
