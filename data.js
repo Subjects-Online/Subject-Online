@@ -266,6 +266,12 @@ const CONTENT = {
           type: "video",
           content: "./pdfs/accounting/Lect 7 (Acc.) (S.O V2).mp4",
         },
+        {
+          id: "vid8",
+          title: "Part 1 Dr.MZ",
+          type: "video",
+          content: "./pdfs/accounting/Part 1 Acc. (S.O V2).mp4",
+        },
       ], // Chapter 3
       [], // Chapter 4
     ],
